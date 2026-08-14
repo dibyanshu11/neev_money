@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 /// Neev Money palette — white canvas · deep green · gold CTAs (design board).
 class AppColors {
-  // Brand
-  static const primary = Color(0xFF0C2E24);
-  static const primarySoft = Color(0xFF1A3C34);
-  static const primaryLight = Color(0xFF245C4E);
-  static const secondary = Color(0xFFE8A752);
+  // Brand — sampled from the design board.
+  static const primary = Color(0xFF0C4941);
+  static const primarySoft = Color(0xFF184B46);
+  static const primaryLight = Color(0xFF22554E);
+  static const secondary = Color(0xFFF2A83D);
   static const secondaryDark = Color(0xFFC47D0A);
   static const secondarySoft = Color(0xFFFFF4DF);
 
@@ -38,16 +38,20 @@ class AppColors {
   static const negative = Color(0xFFD64545);
 
   // Feature tokens
-  static const splashButton = Color(0xFF1A3C34);
+  /// Secondary CTA on the splash canvas.
+  static const splashButton = Color(0xFF234E46);
+
+  /// Muted green a filled CTA falls back to while it can't be tapped.
+  static const buttonDisabled = Color(0xFF9CB3AD);
   static const inputFill = Color(0xFFF2F7F5);
   static const linkBlue = Color(0xFF2563EB);
   static const securityBanner = Color(0xFFF2F9F6);
-  static const investOrange = Color(0xFFE8A752);
+  static const investOrange = Color(0xFFF2A83D);
   static const alertBanner = Color(0xFFFFF6E8);
-  static const returnsPill = Color(0xFF1A3C34);
+  static const returnsPill = Color(0xFF0C4941);
   static const chipSelectedBg = Color(0xFFE8F5F1);
-  static const navSelected = Color(0xFF1A6B56);
-  static const allocationHybrid = Color(0xFFE8A752);
+  static const navSelected = Color(0xFF0C4941);
+  static const allocationHybrid = Color(0xFFF2A83D);
   static const allocationDebt = Color(0xFFC9D5D1);
 
   static List<BoxShadow> get softShadow => [

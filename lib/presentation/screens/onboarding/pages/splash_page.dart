@@ -10,6 +10,15 @@ import 'package:new_app/presentation/blocs/onboarding/onboarding_event_state.dar
 import 'package:new_app/presentation/widgets/app_dialogs.dart';
 import 'package:new_app/router/route_manager.dart';
 
+/// Splash palette sampled from the brand board: the canvas fades from the deep
+/// brand green at the top to a darker green behind the CTAs.
+const _splashGradient = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [Color(0xFF0C4941), Color(0xFF0A3732)],
+);
+const _splashLogoTile = Color(0xFF22554E);
+
 /// 1) Brand splash (2s) → 2) Get started (logged-out only).
 ///
 /// Logo is drawn with Flutter widgets (not SVG) so it appears on the first frame.
@@ -51,8 +60,8 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ColoredBox(
-      color: AppColors.primary,
+    return DecoratedBox(
+      decoration: const BoxDecoration(gradient: _splashGradient),
       child: SizedBox.expand(
         child: AnimatedSwitcher(
           duration: const Duration(milliseconds: 400),
@@ -98,21 +107,26 @@ class _GetStartedView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 28),
+        padding: const EdgeInsets.symmetric(horizontal: 26),
         child: Column(
           children: [
             const Spacer(flex: 2),
             const _NeevMark(size: 84),
             const SizedBox(height: 28),
-            const _Tagline(fontSize: 26),
-            const SizedBox(height: 12),
-            Text(
-              'Build real wealth, one steady step at a time.',
-              textAlign: TextAlign.center,
-              style: TextStyles.body.copyWith(
-                color: Colors.white.withValues(alpha: 0.78),
-                fontSize: 15,
-                height: 1.5,
+            const _Tagline(fontSize: 32),
+            const SizedBox(height: 18),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Text(
+                'Build real wealth, one steady step at a time.',
+                textAlign: TextAlign.center,
+                style: TextStyles.body.copyWith(
+                  color: Colors.white.withValues(alpha: 0.86),
+                  fontSize: 17,
+                  fontWeight: FontWeight.w400,
+                  height: 1.7,
+                  letterSpacing: 0.2,
+                ),
               ),
             ),
             const Spacer(flex: 3),
@@ -125,7 +139,7 @@ class _GetStartedView extends StatelessWidget {
                     );
               },
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 14),
             LoadingNeevButton(
               title: 'I already have an account',
               filled: false,
@@ -138,14 +152,14 @@ class _GetStartedView extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Text(
-              'From the house of JK Capital · ARN-XXXXXX',
+              'from the desk of JK Capital · ARN-XXXXXX',
               style: TextStyles.caption.copyWith(
-                color: Colors.white.withValues(alpha: 0.42),
-                fontSize: 11,
+                color: Colors.white.withValues(alpha: 0.45),
+                fontSize: 14,
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 18),
           ],
         ),
       ),
@@ -164,11 +178,11 @@ class _Tagline extends StatelessWidget {
       'Sapne aapke,\nNeev hamari.',
       textAlign: TextAlign.center,
       style: TextStyles.heading2.copyWith(
-        color: AppColors.secondary,
+        color: AppColors.white,
         fontSize: fontSize,
-        fontWeight: FontWeight.w700,
-        height: 1.25,
-        letterSpacing: -0.3,
+        fontWeight: FontWeight.w800,
+        height: 1.32,
+        letterSpacing: 0,
       ),
     );
   }
@@ -182,7 +196,7 @@ class _NeevMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final radius = size * 0.325;
+    final radius = size * 0.28;
     final barH = size * 0.115;
     final gap = size * 0.055;
 
@@ -191,7 +205,7 @@ class _NeevMark extends StatelessWidget {
       height: size,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          color: const Color(0xFF0C4A41),
+          color: _splashLogoTile,
           borderRadius: BorderRadius.circular(radius),
         ),
         child: Column(
@@ -205,7 +219,7 @@ class _NeevMark extends StatelessWidget {
               color: Colors.white.withValues(alpha: 0.5),
             ),
             SizedBox(height: gap),
-            _bar(width: size * 0.60, height: barH, color: Colors.white),
+            _bar(width: size * 0.60, height: barH, color: AppColors.white),
           ],
         ),
       ),

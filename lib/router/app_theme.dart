@@ -1,18 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:new_app/core/constant/app_colors.dart';
 import 'package:new_app/core/constant/text_styles.dart';
 
 class AppTheme {
   static ThemeData get light {
     final textTheme = TextStyles.materialTextTheme;
-    final inter = GoogleFonts.inter().fontFamily;
 
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
-      fontFamily: inter,
+      fontFamily: TextStyles.fontFamily,
       scaffoldBackgroundColor: AppColors.background,
       primaryColor: AppColors.primary,
       textTheme: textTheme,

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:new_app/core/constant/app_colors.dart';
 
-/// App type scale — Inter across the whole product.
+/// App type scale — bundled Inter across the whole product (iOS + Android).
 class TextStyles {
+  /// Family declared in pubspec.yaml, backed by assets/fonts/Inter-*.ttf.
+  static const fontFamily = 'Inter';
+
   static TextStyle _base({
     required double size,
     FontWeight weight = FontWeight.w400,
@@ -12,7 +14,8 @@ class TextStyles {
     double letterSpacing = 0,
     List<FontFeature>? features,
   }) {
-    return GoogleFonts.inter(
+    return TextStyle(
+      fontFamily: fontFamily,
       fontSize: size,
       fontWeight: weight,
       color: color ?? AppColors.textPrimary,
@@ -115,8 +118,8 @@ class TextStyles {
   static TextStyle label = _base(
     size: 11,
     weight: FontWeight.w500,
-    color: AppColors.textMuted,
-    letterSpacing: 0.8,
+    color: AppColors.textSecondary,
+    letterSpacing: 0.4,
     height: 1.3,
   );
 

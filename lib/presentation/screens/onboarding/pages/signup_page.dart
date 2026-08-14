@@ -24,34 +24,49 @@ class SignupPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(height: 8),
-          Text(
-            isSignIn ? 'Welcome back' : 'Create your account',
-            style: TextStyles.heading1.copyWith(fontSize: 28),
-          ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 16),
+          // const Align(
+          //   alignment: Alignment.centerLeft,
+          //   child: NeevLogoMark(size: 40),
+          // ),
+          // const SizedBox(height: 26),
           Text(
             isSignIn
-                ? 'Enter your mobile number — we’ll send a 6-digit code.'
-                : 'Tell us your name and number. We’ll text a code to verify.',
-            style: TextStyles.body.copyWith(
-              color: AppColors.textSecondary,
-              fontSize: 15,
-              height: 1.5,
+                ? 'Welcome 👋\nEnter your number'
+                : 'Welcome 👋\nCreate your account',
+            style: TextStyles.heading1.copyWith(
+              fontSize: 30,
+              fontWeight: FontWeight.w800,
+              height: 1.2,
+              letterSpacing: 0.1,
             ),
           ),
-          const SizedBox(height: 28),
+          SizedBox(height: 24),
+          if (!isSignIn) ...[
+            Text('Tell us your name and number. We’ll text a code to verify.',
+              style: TextStyles.body.copyWith(
+                color: AppColors.textSecondary,
+                fontSize: 14.5,
+                height: 1.6,
+                letterSpacing: 0.1,
+              ),
+            ),
+            const SizedBox(height: 26),
+          ],
           if (!isSignIn) ...[
             Text('YOUR NAME', style: TextStyles.label),
             const SizedBox(height: 8),
             NeevTextField(
               value: state.name,
               hint: 'How should we call you?',
+              bordered: false,
               onChanged: (v) => bloc.add(OnboardingEvent.nameChanged(v)),
             ),
             const SizedBox(height: 20),
           ],
-          Text('MOBILE NUMBER', style: TextStyles.label),
+          Text('MOBILE NUMBER', style: TextStyles.label.copyWith(
+            fontSize: 13,letterSpacing: 0.1, color: Colors.grey.shade800
+          ),),
           const SizedBox(height: 8),
           Row(
             children: [
@@ -76,7 +91,12 @@ class SignupPage extends StatelessWidget {
                 child: NeevTextField(
                   value: state.phone,
                   hint: '98765 43210',
+                  bordered: false,
                   keyboardType: TextInputType.phone,
+                  style: TextStyles.bodyBold.copyWith(
+                    fontSize: 17,
+                    letterSpacing: 0.5,
+                  ),
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(10),
@@ -101,7 +121,7 @@ class SignupPage extends StatelessWidget {
             isLoading: state.isBusy,
             onTap: () => bloc.add(const OnboardingEvent.submitSignup()),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 22),
           Row(
             children: [
               const Expanded(child: Divider(color: AppColors.divider)),
@@ -111,21 +131,29 @@ class SignupPage extends StatelessWidget {
                   'or',
                   style: TextStyles.caption.copyWith(
                     color: AppColors.textMuted,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
                   ),
                 ),
               ),
               const Expanded(child: Divider(color: AppColors.divider)),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 22),
           const _GoogleContinueButton(),
-          const SizedBox(height: 20),
-          Text(
-            'By continuing you agree to our Terms & Privacy Policy',
+          const SizedBox(height: 22),
+          Text.rich(
+            TextSpan(
+              text: 'By continuing you agree to our ',
+              children: [
+                TextSpan(text: 'Terms', style: _linkStyle),
+                const TextSpan(text: ' & '),
+                TextSpan(text: 'Privacy Policy', style: _linkStyle),
+              ],
+            ),
             style: TextStyles.caption.copyWith(
-              color: AppColors.textMuted,
-              height: 1.4,
+              color: AppColors.textSecondary,
+              fontSize: 12,
+              height: 1.5,
             ),
             textAlign: TextAlign.center,
           ),
@@ -135,6 +163,13 @@ class SignupPage extends StatelessWidget {
     );
   }
 }
+
+final _linkStyle = TextStyles.caption.copyWith(
+  color: AppColors.primary,
+  fontSize: 12,
+  fontWeight: FontWeight.w700,
+  height: 1.5,
+);
 
 class _GoogleContinueButton extends StatelessWidget {
   const _GoogleContinueButton();

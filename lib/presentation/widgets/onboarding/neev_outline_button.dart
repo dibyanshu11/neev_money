@@ -34,12 +34,16 @@ class NeevOutlineButton extends StatelessWidget {
     final isAccent = accent && enabled;
     final isFilled = (filled || isAccent) && enabled && !onDark;
     final isDarkSecondary = onDark && !accent;
+    /// A solid CTA that is currently disabled — greyed green, not washed out.
+    final isDisabledFill = !enabled && (filled || accent);
 
     final Color fg;
-    if (!enabled) {
+    if (isDisabledFill) {
+      fg = AppColors.white;
+    } else if (!enabled) {
       fg = AppColors.textMuted;
     } else if (isAccent) {
-      fg = AppColors.black;
+      fg = AppColors.primary;
     } else if (isFilled) {
       fg = AppColors.white;
     } else if (isDarkSecondary) {
@@ -56,11 +60,12 @@ class NeevOutlineButton extends StatelessWidget {
             ? constraints.maxWidth
             : MediaQuery.sizeOf(context).width;
         final targetW = isLoading ? height : maxW;
-        final radius = isLoading ? height / 2 : 14.0;
+        // Stadium shape at every size — loading only collapses the width.
+        const radius = height / 2;
 
         return AnimatedOpacity(
           duration: const Duration(milliseconds: 160),
-          opacity: enabled || isLoading ? 1 : 0.5,
+          opacity: enabled || isLoading || isDisabledFill ? 1 : 0.5,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 320),
             curve: Curves.easeInOutCubic,
@@ -72,26 +77,21 @@ class NeevOutlineButton extends StatelessWidget {
               boxShadow: (isFilled || isAccent) && !isLoading
                   ? AppColors.softShadow
                   : null,
-              gradient: isFilled && !isAccent
-                  ? const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [AppColors.primarySoft, AppColors.primary],
-                    )
-                  : null,
-              color: isAccent
-                  ? AppColors.secondary
-                  : isDarkSecondary
-                      ? AppColors.splashButton
-                      : isFilled
-                          ? (isAccent ? AppColors.secondary : AppColors.primary)
-                          : AppColors.surface,
+              color: isDisabledFill
+                  ? AppColors.buttonDisabled
+                  : isAccent
+                      ? AppColors.secondary
+                      : isDarkSecondary
+                          ? AppColors.splashButton
+                          : isFilled
+                              ? AppColors.primary
+                              : AppColors.surface,
               border: Border.all(
                 color: enabled || isLoading
                     ? (isFilled || isAccent || isDarkSecondary
                         ? Colors.transparent
                         : AppColors.primary)
-                    : AppColors.border,
+                    : (isDisabledFill ? Colors.transparent : AppColors.border),
                 width: 1.5,
               ),
             ),

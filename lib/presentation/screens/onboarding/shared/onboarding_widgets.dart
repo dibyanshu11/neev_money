@@ -178,25 +178,29 @@ class FieldLabel extends StatelessWidget {
   }
 }
 
-InputDecoration neevInputDecoration({String? hint}) {
+InputDecoration neevInputDecoration({String? hint, bool bordered = true}) {
+  final radius = BorderRadius.circular(16);
+  final idle = OutlineInputBorder(
+    borderRadius: radius,
+    borderSide: bordered
+        ? const BorderSide(color: AppColors.border)
+        : BorderSide.none,
+  );
+
   return InputDecoration(
     filled: true,
     fillColor: AppColors.surfaceMuted,
     hintText: hint,
     hintStyle: TextStyles.body.copyWith(color: AppColors.textMuted),
     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(16),
-      borderSide: const BorderSide(color: AppColors.border),
-    ),
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(16),
-      borderSide: const BorderSide(color: AppColors.border),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(16),
-      borderSide: const BorderSide(color: AppColors.primary, width: 1.6),
-    ),
+    border: idle,
+    enabledBorder: idle,
+    focusedBorder: bordered
+        ? OutlineInputBorder(
+            borderRadius: radius,
+            borderSide: const BorderSide(color: AppColors.primary, width: 1.6),
+          )
+        : idle,
   );
 }
 
@@ -210,6 +214,7 @@ class NeevTextField extends StatefulWidget {
     this.inputFormatters,
     this.textAlign = TextAlign.start,
     this.style,
+    this.bordered = true,
   });
 
   final String value;
@@ -219,6 +224,7 @@ class NeevTextField extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextAlign textAlign;
   final TextStyle? style;
+  final bool bordered;
 
   @override
   State<NeevTextField> createState() => _NeevTextFieldState();
@@ -258,7 +264,10 @@ class _NeevTextFieldState extends State<NeevTextField> {
       inputFormatters: widget.inputFormatters,
       textAlign: widget.textAlign,
       style: widget.style ?? TextStyles.bodyBold.copyWith(fontSize: 16),
-      decoration: neevInputDecoration(hint: widget.hint),
+      decoration: neevInputDecoration(
+        hint: widget.hint,
+        bordered: widget.bordered,
+      ),
     );
   }
 }
