@@ -33,7 +33,7 @@ class SignupPage extends StatelessWidget {
           Text(
             isSignIn
                 ? 'Welcome 👋\nEnter your number'
-                : 'Welcome 👋\nCreate your account',
+                : 'Welcome 👋\nLets Create your account',
             style: TextStyles.heading1,
           ),
           const SizedBox(height: 24),
@@ -49,7 +49,7 @@ class SignupPage extends StatelessWidget {
             const SizedBox(height: 8),
             NeevTextField(
               value: state.name,
-              hint: 'How should we call you?',
+              hint: 'Rohan',
               bordered: false,
               onChanged: (v) => bloc.add(OnboardingEvent.nameChanged(v)),
             ),

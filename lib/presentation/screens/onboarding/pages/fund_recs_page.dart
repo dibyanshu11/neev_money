@@ -100,20 +100,20 @@ class _FundRecsPageState extends State<FundRecsPage> {
       bottom: Column(
         children: [
           NeevOutlineButton(
-            title: 'Start this plan · ${Formatters.currency(monthlySip)}/mo',
+            title: 'Start Investing Now',
             filled: true,
             onTap: () => bloc.add(const OnboardingEvent.confirmInvest()),
           ),
-          const SizedBox(height: 10),
-          NeevOutlineButton(
-            title: 'Adjust amount or funds',
-            onTap: () => _openAdjustSheet(goal),
-          ),
+          // const SizedBox(height: 10),
+          // NeevOutlineButton(
+          //   title: 'Adjust amount or funds',
+          //   onTap: () => _openAdjustSheet(goal),
+          // ),
           const SizedBox(height: 10),
           SizedBox(
             width: double.infinity,
             child: WhatsAppButton(
-              label: 'WhatsApp · connect to your RM',
+              label: 'WhatsApp · speak to your RM',
               message:
                   'Hi, I want to discuss my ${goal.label} portfolio plan on Neev Money.',
             ),

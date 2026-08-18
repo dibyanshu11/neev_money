@@ -745,8 +745,8 @@ String goalEmoji(String id) {
       return '🎓';
     case 'retirement':
       return '🌴';
-    case 'big_buy':
-      return '🚗';
+    case 'wealth_creation':
+      return '💰';
     case 'emergency':
       return '🛟';
     case 'other':

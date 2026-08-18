@@ -167,13 +167,14 @@ class _GoalSelectPageState extends State<GoalSelectPage> {
           ],
           const SizedBox(height: 16),
           GridView.builder(
+            padding: EdgeInsets.zero,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               mainAxisSpacing: 12,
               crossAxisSpacing: 12,
-              childAspectRatio: 1.05,
+              childAspectRatio: 1.15,
             ),
             itemCount: goals.length + 1,
             itemBuilder: (context, i) {
@@ -198,60 +199,55 @@ class _GoalSelectPageState extends State<GoalSelectPage> {
               );
             },
           ),
-          AnimatedSize(
-            duration: const Duration(milliseconds: 220),
-            curve: Curves.easeOutCubic,
-            child: _otherSelected
-                ? Padding(
-                    key: _otherFormKey,
-                    padding: const EdgeInsets.only(top: 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Describe your goal',
-                          style: TextStyles.caption.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.textMuted,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        TextField(
-                          controller: _otherController,
-                          focusNode: _otherFocus,
-                          onChanged: (_) => setState(() {}),
-                          style: TextStyles.bodyBold,
-                          maxLines: 5,
-                          cursorColor: AppColors.primary,
-                          decoration: InputDecoration(
-                            hintText: 'e.g. Dream car, sabbatical…',
-                            hintStyle: TextStyles.caption.copyWith(
-                              color: AppColors.textMuted,
-                            ),
-                            filled: true,
-                            fillColor: AppColors.surfaceMuted,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              borderSide: BorderSide.none,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              borderSide: const BorderSide(
-                                color: AppColors.primary,
-                                width: 1.6,
-                              ),
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 16,
-                            ),
-                          ),
-                        ),
-                      ],
+          _otherSelected
+              ? Padding(
+                padding: const EdgeInsets.only(top: 24.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Describe your goal',
+                      style: TextStyles.caption.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textMuted,
+                      ),
                     ),
-                  )
-                : const SizedBox.shrink(),
-          ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: _otherController,
+                      focusNode: _otherFocus,
+                      onChanged: (_) => setState(() {}),
+                      style: TextStyles.bodyBold,
+                      maxLines: 5,
+                      cursorColor: AppColors.primary,
+                      decoration: InputDecoration(
+                        hintText: 'e.g. Dream car, sabbatical…',
+                        hintStyle: TextStyles.caption.copyWith(
+                          color: AppColors.textMuted,
+                        ),
+                        filled: true,
+                        fillColor: AppColors.surfaceMuted,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          borderSide: const BorderSide(
+                            color: AppColors.primary,
+                            width: 1.6,
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 16,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+              : const SizedBox.shrink(),
         ],
       ),
     );
@@ -287,28 +283,39 @@ class _GoalGridTile extends StatelessWidget {
           curve: Curves.easeOutCubic,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: alreadyAdded
-                ? AppColors.surfaceMuted
-                : selected
-                ? AppColors.primary
-                : AppColors.surface,
+            color: selected ? AppColors.primary : AppColors.surfaceMuted,
             borderRadius: BorderRadius.circular(18),
             border: Border.all(
-              color: selected
-                  ? AppColors.primary
-                  : alreadyAdded
-                  ? AppColors.chipSelectedBg
-                  : AppColors.border,
+              color: selected ? AppColors.primary : AppColors.border,
               width: selected ? 1.6 : 1.2,
             ),
-            boxShadow: selected || alreadyAdded ? null : AppColors.cardShadow,
+            boxShadow: selected
+                ? [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: 0.4),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ]
+                : [
+                    BoxShadow(
+                      color: const Color(0xFF0C2E24).withValues(alpha: 0.08),
+                      blurRadius: 10,
+                      offset: const Offset(0, 3),
+                    ),
+                    BoxShadow(
+                      color: const Color(0xFF0C2E24).withValues(alpha: 0.04),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  Text(emoji, style: const TextStyle(fontSize: 26)),
+                  Text(emoji, style: const TextStyle(fontSize: 30)),
                   const Spacer(),
                   if (alreadyAdded)
                     Text(
@@ -365,9 +372,9 @@ class _OtherGoalTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _GoalGridTile(
-      emoji: '✏️',
-      title: 'Something else',
-      subtitle: 'Name a custom goal in your own words',
+      emoji: '🎯',
+      title: 'Others',
+      subtitle: 'Mention your goals',
       selected: selected,
       alreadyAdded: false,
       onTap: onTap,

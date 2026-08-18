@@ -41,6 +41,14 @@ class QuizPage extends StatelessWidget {
           ),
           const SizedBox(height: 18),
           Text(
+            'Answer a few questions to help us build your customized portfolio',
+            style: TextStyles.body.copyWith(
+              color: AppColors.textSecondary,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(height: 14),
+          Text(
             question.text,
             style: TextStyles.heading2.copyWith(height: 1.25),
           ),

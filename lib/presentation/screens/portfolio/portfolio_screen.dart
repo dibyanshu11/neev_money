@@ -322,7 +322,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: WhatsAppButton(
-                      label: 'WhatsApp · connect to your RM',
+                      label: 'WhatsApp · speak to your RM',
                       message:
                           'Hi, I want to discuss my ${goal.label} portfolio on Neev Money.',
                     ),
