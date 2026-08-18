@@ -371,7 +371,7 @@ class _MiniStat extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             value,
-            style: TextStyles.bodyBold.copyWith(color: AppColors.white),
+            style: TextStyles.amountSm.copyWith(color: AppColors.white),
           ),
         ],
       ),
@@ -428,7 +428,11 @@ class _PlanFundTile extends StatelessWidget {
               Text('${fund.pct}%', style: TextStyles.amountSm),
               Text(
                 '${Formatters.currency(monthly)}/mo',
-                style: TextStyles.caption,
+                style: TextStyles.amountSm.copyWith(
+                  fontSize: 12,
+                  color: AppColors.textMuted,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),

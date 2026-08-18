@@ -4,7 +4,7 @@ import 'package:new_app/core/constant/app_colors.dart';
 import 'package:new_app/core/constant/text_styles.dart';
 
 class AppTheme {
-  /// Inter on iOS Cupertino widgets (switches, dialogs, pickers).
+  /// Bricolage Grotesque on iOS Cupertino widgets (switches, dialogs, pickers).
   static CupertinoThemeData get cupertino => CupertinoThemeData(
         primaryColor: AppColors.primary,
         textTheme: CupertinoTextThemeData(

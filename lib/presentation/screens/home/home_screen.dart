@@ -469,7 +469,7 @@ class _StatCell extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               value,
-              style: TextStyles.bodyBold.copyWith(
+              style: TextStyles.amountSm.copyWith(
                 fontSize: 13,
                 color: valueColor ?? AppColors.textPrimary,
               ),
@@ -681,7 +681,11 @@ class _HoldingRow extends StatelessWidget {
                   const SizedBox(height: 2),
                   Text(
                     Formatters.currency(holding.currentValue),
-                    style: TextStyles.caption,
+                    style: TextStyles.amountSm.copyWith(
+                      fontSize: 12,
+                      color: AppColors.textMuted,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ],
               ),

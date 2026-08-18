@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/core/constant/app_colors.dart';
 
-/// Neev design-board typography — bundled **Inter** (same on iOS + Android).
+/// Neev design-board typography — bundled **Bricolage Grotesque** (same on iOS + Android).
 ///
 /// Hierarchy from mockup:
 /// • Bold 700 — screen titles, hero amounts, primary headings
@@ -9,7 +9,7 @@ import 'package:new_app/core/constant/app_colors.dart';
 /// • Medium 500 — nav inactive, field hints, chips
 /// • Regular 400 — body, captions, helper text
 class TextStyles {
-  static const fontFamily = 'Inter';
+  static const fontFamily = 'Bricolage Grotesque';
 
   static TextStyle _base({
     required double size,

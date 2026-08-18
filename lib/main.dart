@@ -23,7 +23,7 @@ class NeevMoneyApp extends StatelessWidget {
       initialRoute: RouteName.splash,
       onGenerateRoute: RouteManager().generate,
       builder: (context, child) {
-        // Inter everywhere — same on Android and iOS (not Roboto / SF Pro).
+        // Bricolage Grotesque everywhere — same on Android and iOS.
         return CupertinoTheme(
           data: AppTheme.cupertino,
           child: DefaultTextStyle(
