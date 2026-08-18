@@ -74,7 +74,7 @@ class RmSelectPage extends StatelessWidget {
                                   'Best match',
                                   style: TextStyles.caption.copyWith(
                                     color: AppColors.secondaryDark,
-                                    fontWeight: FontWeight.w800,
+                                    fontWeight: FontWeight.w700,
                                     fontSize: 10,
                                   ),
                                 ),

@@ -131,22 +131,13 @@ class _SectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(
-          title,
-          style: TextStyles.heading3.copyWith(
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        Text(title, style: TextStyles.sectionTitle),
         const Spacer(),
         GestureDetector(
           onTap: onAction,
           child: Text(
             '$action →',
-            style: TextStyles.caption.copyWith(
-              color: AppColors.primary,
-              fontWeight: FontWeight.w700,
-            ),
+            style: TextStyles.link.copyWith(fontSize: 12),
           ),
         ),
       ],

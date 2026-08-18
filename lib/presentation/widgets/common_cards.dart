@@ -122,17 +122,16 @@ class FilterPill extends StatelessWidget {
           vertical: compact ? 6 : 8,
         ),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : AppColors.surfaceMuted,
+          color: isSelected ? AppColors.primary : AppColors.white,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.surfaceMuted,
+            color: isSelected ? AppColors.primary : AppColors.border,
           ),
         ),
         child: Text(
           label,
-          style: TextStyles.caption.copyWith(
-            color: isSelected ? AppColors.white : AppColors.textPrimary,
-            fontWeight: FontWeight.w600,
+          style: TextStyles.chip.copyWith(
+            color: isSelected ? AppColors.white : AppColors.textSecondary,
             fontSize: compact ? 12 : 13,
           ),
         ),

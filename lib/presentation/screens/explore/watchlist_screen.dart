@@ -142,8 +142,8 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
                         width: 88,
                         child: LoadingActionButton(
                           title: 'Invest',
-                          bgColor: AppColors.primary,
-                          textColor: AppColors.white,
+                          bgColor: AppColors.investOrange,
+                          textColor: AppColors.investButtonFg,
                           minLoadMs: 400,
                           onPressed: () async {
                             await Future<void>.delayed(

@@ -31,7 +31,7 @@ class _MainShellState extends State<MainShell> {
   /// Matches each tab’s page canvas behind the floating nav.
   static const _tabBackgrounds = <Color>[
     Color(0xFFF7F9F8), // Home
-    AppColors.background, // Explore
+    Color(0xFFF7F9F8), // Explore
     AppColors.background, // Portfolio
     Color(0xFFF5F5F5), // Account
   ];

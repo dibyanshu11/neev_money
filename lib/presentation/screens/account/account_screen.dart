@@ -150,12 +150,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      _name,
-                                      style: TextStyles.heading3.copyWith(
-                                        fontSize: 18,
-                                      ),
-                                    ),
+                                    Text(_name, style: TextStyles.sectionTitle),
                                     const SizedBox(height: 4),
                                     Text(
                                       _email.isNotEmpty

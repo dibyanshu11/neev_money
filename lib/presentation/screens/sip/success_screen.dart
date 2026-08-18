@@ -4,7 +4,7 @@ import 'package:new_app/core/constant/text_styles.dart';
 import 'package:new_app/core/utils/formatters.dart';
 import 'package:new_app/core/utils/platform_icons.dart';
 import 'package:new_app/domain/models/sip_model.dart';
-import 'package:new_app/presentation/widgets/app_button.dart';
+import 'package:new_app/presentation/widgets/onboarding/neev_outline_button.dart';
 import 'package:new_app/router/route_manager.dart';
 
 class SuccessScreen extends StatelessWidget {
@@ -16,14 +16,12 @@ class SuccessScreen extends StatelessWidget {
     final amount = confirmation?.amount ?? 5000;
     final fundName = confirmation?.fundName ?? 'your fund';
     final amountText = Formatters.currency(amount);
-    final whiteBody = TextStyles.body.copyWith(
+    final whiteBody = TextStyles.subtitle.copyWith(
       color: AppColors.white.withValues(alpha: 0.88),
       height: 1.5,
-      fontSize: 15,
     );
-    final whiteBold = TextStyles.bodyBold.copyWith(
+    final whiteBold = TextStyles.amountSm.copyWith(
       color: AppColors.white,
-      fontSize: 15,
       height: 1.5,
     );
 
@@ -46,14 +44,14 @@ class SuccessScreen extends StatelessWidget {
                   child: AppIcon(
                     AppIcons.checkPlain(),
                     size: 42,
-                    color: AppColors.primary,
+                    color: AppColors.textPrimary,
                   ),
                 ),
               ),
               const SizedBox(height: 28),
               Text(
                 "You're all set! 🎉",
-                style: TextStyles.display.copyWith(color: AppColors.white),
+                style: TextStyles.heading1.copyWith(color: AppColors.white),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 14),
@@ -101,19 +99,15 @@ class SuccessScreen extends StatelessWidget {
                 ),
               ),
               const Spacer(flex: 3),
-              AppButton(
+              NeevOutlineButton(
                 title: 'See my portfolio',
-                bgColor: AppColors.secondary,
-                textColor: AppColors.primary,
-                borderRadius: 28,
-                padding: const EdgeInsets.symmetric(vertical: 18),
+                accent: true,
                 onTap: () => NavigateTo.mainShell(context, tab: 2),
               ),
               const SizedBox(height: 12),
-              OutlineButton(
-                title: 'Go to dashboard',
-                borderColor: AppColors.white.withValues(alpha: 0.45),
-                textColor: AppColors.white,
+              NeevOutlineButton(
+                title: 'Back to home',
+                onDark: true,
                 onTap: () => NavigateTo.mainShell(context),
               ),
               const SizedBox(height: 8),
@@ -131,16 +125,12 @@ class SuccessScreen extends StatelessWidget {
           label,
           style: TextStyles.caption.copyWith(
             color: Colors.white.withValues(alpha: 0.65),
-            fontSize: 13,
           ),
         ),
         const Spacer(),
         Text(
           value,
-          style: TextStyles.bodyBold.copyWith(
-            color: AppColors.white,
-            fontSize: 14,
-          ),
+          style: TextStyles.bodyBold.copyWith(color: AppColors.white),
         ),
       ],
     );

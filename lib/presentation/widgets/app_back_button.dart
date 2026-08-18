@@ -51,8 +51,7 @@ class AppBackButton extends StatelessWidget {
 }
 
 /// Shared page title style for AppBars and custom headers.
-TextStyle get appBarTitleStyle =>
-    TextStyles.heading2.copyWith(color: AppColors.textPrimary);
+TextStyle get appBarTitleStyle => TextStyles.appBarTitle;
 
 /// Convenience leading widget with padding for Material [AppBar].
 Widget appBarLeading(BuildContext context, {VoidCallback? onPressed}) {

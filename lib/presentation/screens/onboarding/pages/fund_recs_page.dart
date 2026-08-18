@@ -583,7 +583,7 @@ class _PlanFundTile extends StatelessWidget {
               fund.initials,
               style: TextStyles.caption.copyWith(
                 color: AppColors.white,
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w700,
                 fontSize: 12,
               ),
             ),

@@ -24,6 +24,9 @@ const _filterChips = [
   'ELSS',
 ];
 
+/// Soft canvas behind fund cards — matches design board Explore tab.
+const _exploreCanvas = Color(0xFFF7F9F8);
+
 class ExploreScreen extends StatelessWidget {
   const ExploreScreen({super.key});
 
@@ -34,74 +37,81 @@ class ExploreScreen extends StatelessWidget {
         final funds = _filteredFunds(state);
 
         return ColoredBox(
-          color: AppColors.background,
+          color: _exploreCanvas,
           child: SafeArea(
             bottom: false,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              'Find a fund',
-                              style: TextStyles.heading1,
+                ColoredBox(
+                  color: AppColors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 14),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Find a fund',
+                                style: TextStyles.heading1.copyWith(fontSize: 24),
+                              ),
                             ),
-                          ),
-                          const NotificationsBell(),
-                        ],
-                      ),
-                      const SizedBox(height: 14),
-                      TextField(
-                        onChanged: (query) => context
-                            .read<ExploreBloc>()
-                            .add(ExploreEvent.searchChanged(query)),
-                        style: TextStyles.bodyBold.copyWith(
-                          color: AppColors.textPrimary,
-                          fontWeight: FontWeight.w500,
+                            const NotificationsBell(),
+                          ],
                         ),
-                        decoration: InputDecoration(
-                          hintText: 'Search funds',
-                          hintStyle: TextStyles.body.copyWith(
-                            color: AppColors.textMuted,
+                        const SizedBox(height: 14),
+                        TextField(
+                          onChanged: (query) => context
+                              .read<ExploreBloc>()
+                              .add(ExploreEvent.searchChanged(query)),
+                          style: TextStyles.inputBold.copyWith(
+                            color: AppColors.textPrimary,
+                            fontWeight: FontWeight.w500,
                           ),
-                          prefixIcon: IconButton(
-                            onPressed: null,
-                            icon: AppIcon(
-                              AppIcons.search(),
+                          decoration: InputDecoration(
+                            hintText: 'Search funds',
+                            hintStyle: TextStyles.body.copyWith(
                               color: AppColors.textMuted,
-                              size: AppIconSizes.md,
                             ),
-                          ),
-                          filled: true,
-                          fillColor: AppColors.surfaceMuted,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(14),
-                            borderSide: BorderSide.none,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(14),
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(14),
-                            borderSide: const BorderSide(
-                              color: AppColors.primary,
-                              width: 1.4,
+                            prefixIcon: IconButton(
+                              onPressed: null,
+                              icon: AppIcon(
+                                AppIcons.search(),
+                                color: AppColors.textMuted,
+                                size: AppIconSizes.md,
+                              ),
                             ),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 14,
+                            filled: true,
+                            fillColor: AppColors.inputFill,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14),
+                              borderSide: const BorderSide(
+                                color: AppColors.border,
+                              ),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14),
+                              borderSide: const BorderSide(
+                                color: AppColors.border,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14),
+                              borderSide: const BorderSide(
+                                color: AppColors.primary,
+                                width: 1.4,
+                              ),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 14,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -128,7 +138,7 @@ class ExploreScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
                     'Picked for you',
-                    style: TextStyles.bodyBold.copyWith(fontSize: 16),
+                    style: TextStyles.sectionTitle.copyWith(fontSize: 16),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -232,7 +242,6 @@ class _ExploreFundCard extends StatelessWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.cardBorder),
-        boxShadow: AppColors.cardShadow,
       ),
       child: Material(
         color: Colors.transparent,
@@ -254,16 +263,14 @@ class _ExploreFundCard extends StatelessWidget {
                         children: [
                           Text(
                             fund.name,
-                            style: TextStyles.bodyBold.copyWith(fontSize: 14),
+                            style: TextStyles.bodyBold,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(height: 3),
                           Text(
                             '${fund.category} · ${fund.riskLevel}',
-                            style: TextStyles.caption.copyWith(
-                              color: AppColors.textMuted,
-                            ),
+                            style: TextStyles.caption,
                           ),
                         ],
                       ),
@@ -294,11 +301,11 @@ class _ExploreFundCard extends StatelessWidget {
                       ),
                     ),
                     Material(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(12),
+                      color: AppColors.investOrange,
+                      borderRadius: BorderRadius.circular(24),
                       child: InkWell(
                         onTap: onInvest,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(24),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 18,
@@ -306,9 +313,8 @@ class _ExploreFundCard extends StatelessWidget {
                           ),
                           child: Text(
                             'Invest',
-                            style: TextStyles.bodyBold.copyWith(
-                              color: AppColors.white,
-                              fontSize: 13,
+                            style: TextStyles.chip.copyWith(
+                              color: AppColors.investButtonFg,
                             ),
                           ),
                         ),
@@ -348,7 +354,7 @@ class _Stat extends StatelessWidget {
         const SizedBox(height: 2),
         Text(
           value,
-          style: TextStyles.bodyBold.copyWith(
+          style: TextStyles.amountSm.copyWith(
             color: valueColor ?? AppColors.textPrimary,
             fontSize: 14,
           ),

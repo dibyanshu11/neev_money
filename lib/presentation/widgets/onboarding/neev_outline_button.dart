@@ -43,7 +43,7 @@ class NeevOutlineButton extends StatelessWidget {
     } else if (!enabled) {
       fg = AppColors.textMuted;
     } else if (isAccent) {
-      fg = AppColors.primary;
+      fg = AppColors.textPrimary;
     } else if (isFilled) {
       fg = AppColors.white;
     } else if (isDarkSecondary) {
@@ -127,10 +127,7 @@ class NeevOutlineButton extends StatelessWidget {
                             title,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyles.button.copyWith(
-                              color: fg,
-                              fontSize: 16,
-                            ),
+                            style: TextStyles.button.copyWith(color: fg),
                           ),
                   ),
                 ),
@@ -245,9 +242,8 @@ class NeevChip extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: TextStyles.bodyBold.copyWith(
+          style: TextStyles.chip.copyWith(
             color: selected ? AppColors.white : AppColors.textPrimary,
-            fontSize: 13,
           ),
         ),
       ),

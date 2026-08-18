@@ -91,10 +91,7 @@ class PageIntro extends StatelessWidget {
         ],
         Text(title, style: TextStyles.heading1),
         const SizedBox(height: 8),
-        Text(
-          subtitle,
-          style: TextStyles.body.copyWith(fontSize: 15, height: 1.5),
-        ),
+        Text(subtitle, style: TextStyles.subtitle),
       ],
     );
   }
@@ -168,11 +165,7 @@ class FieldLabel extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8, top: 2),
       child: Text(
         text,
-        style: TextStyles.label.copyWith(
-          fontWeight: FontWeight.w600,
-          color: AppColors.textPrimary,
-          fontSize: 13,
-        ),
+        style: TextStyles.fieldLabel,
       ),
     );
   }
@@ -263,7 +256,7 @@ class _NeevTextFieldState extends State<NeevTextField> {
       keyboardType: widget.keyboardType,
       inputFormatters: widget.inputFormatters,
       textAlign: widget.textAlign,
-      style: widget.style ?? TextStyles.bodyBold.copyWith(fontSize: 16),
+      style: widget.style ?? TextStyles.inputBold,
       decoration: neevInputDecoration(
         hint: widget.hint,
         bordered: widget.bordered,

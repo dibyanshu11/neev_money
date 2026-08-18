@@ -101,7 +101,7 @@ class ConfirmPayScreen extends StatelessWidget {
                             const Spacer(),
                             Text(
                               amountLabel,
-                              style: TextStyles.bodyBold.copyWith(fontSize: 16),
+                              style: TextStyles.amountSm,
                             ),
                           ],
                         ),
@@ -109,10 +109,7 @@ class ConfirmPayScreen extends StatelessWidget {
                       const SizedBox(height: 28),
                       Text(
                         "How you'll pay",
-                        style: TextStyles.heading3.copyWith(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w700,
-                        ),
+                        style: TextStyles.sectionTitle,
                       ),
                       const SizedBox(height: 12),
                       _PaymentOption(
@@ -171,10 +168,7 @@ class ConfirmPayScreen extends StatelessWidget {
                       const SizedBox(height: 12),
                       Text(
                         'Distributed by JK Capital · ARN-XXXXXX',
-                        style: TextStyles.caption.copyWith(
-                          color: AppColors.textMuted,
-                          fontSize: 10,
-                        ),
+                        style: TextStyles.micro,
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -210,7 +204,7 @@ class _SummaryRow extends StatelessWidget {
         Expanded(
           child: Text(
             value,
-            style: TextStyles.bodyBold.copyWith(fontSize: 15),
+            style: TextStyles.amountSm,
             textAlign: TextAlign.end,
           ),
         ),

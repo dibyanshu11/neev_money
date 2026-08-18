@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:new_app/core/constant/text_styles.dart';
 import 'package:new_app/core/constant/toast_type.dart';
 import 'package:new_app/core/constant/app_icon_sizes.dart';
 import 'package:new_app/core/utils/platform_icons.dart';
@@ -152,11 +153,9 @@ class _AnimatedToastState extends State<AnimatedToast>
                   Expanded(
                     child: Text(
                       widget.message,
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: TextStyles.bodyBold.copyWith(
                         color: Colors.black87,
                         decoration: TextDecoration.none,
-                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),

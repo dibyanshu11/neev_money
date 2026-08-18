@@ -21,6 +21,7 @@ class GoalSelectPage extends StatefulWidget {
 class _GoalSelectPageState extends State<GoalSelectPage> {
   final _otherController = TextEditingController();
   final _otherFocus = FocusNode();
+  final _otherFormKey = GlobalKey();
   final Set<String> _selectedIds = {};
   bool _otherSelected = false;
 
@@ -63,8 +64,19 @@ class _GoalSelectPageState extends State<GoalSelectPage> {
       _selectedIds.clear();
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted || _otherFocus.context == null) return;
-      _otherFocus.requestFocus();
+      if (!mounted) return;
+      final formContext = _otherFormKey.currentContext;
+      if (formContext != null) {
+        Scrollable.ensureVisible(
+          formContext,
+          duration: const Duration(milliseconds: 280),
+          curve: Curves.easeOutCubic,
+          alignment: 0.2,
+        );
+      }
+      if (_otherFocus.canRequestFocus) {
+        _otherFocus.requestFocus();
+      }
     });
   }
 
@@ -96,9 +108,7 @@ class _GoalSelectPageState extends State<GoalSelectPage> {
       bottom: Column(
         children: [
           NeevLoadingButton(
-            title: count > 1
-                ? 'Continue with $count goals'
-                : 'Continue',
+            title: count > 1 ? 'Continue with $count goals' : 'Continue',
             enabled: _canContinue,
             minLoadMs: 400,
             onPressed: () async {
@@ -108,8 +118,7 @@ class _GoalSelectPageState extends State<GoalSelectPage> {
           if (bloc.savedGoals.isEmpty) ...[
             const SizedBox(height: 8),
             TextButton(
-              onPressed: () =>
-                  bloc.add(const OnboardingEvent.skipGoalSelect()),
+              onPressed: () => bloc.add(const OnboardingEvent.skipGoalSelect()),
               child: Text(
                 'Skip for now',
                 style: TextStyles.bodyBold.copyWith(
@@ -166,159 +175,36 @@ class _GoalSelectPageState extends State<GoalSelectPage> {
               crossAxisSpacing: 12,
               childAspectRatio: 1.05,
             ),
-            itemCount: goals.length,
+            itemCount: goals.length + 1,
             itemBuilder: (context, i) {
+              if (i == goals.length) {
+                return _OtherGoalTile(
+                  selected: _otherSelected,
+                  onTap: _selectOther,
+                );
+              }
+
               final goal = goals[i];
               final already = saved.contains(goal.id);
               final selected =
                   !already && !_otherSelected && _selectedIds.contains(goal.id);
-              return Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: already ? null : () => _toggleGoal(goal.id),
-                  borderRadius: BorderRadius.circular(18),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 220),
-                    curve: Curves.easeOutCubic,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: already
-                          ? AppColors.surfaceMuted
-                          : selected
-                              ? AppColors.primary
-                              : AppColors.surface,
-                      borderRadius: BorderRadius.circular(18),
-                      border: Border.all(
-                        color: selected
-                            ? AppColors.primary
-                            : already
-                                ? AppColors.chipSelectedBg
-                                : AppColors.border,
-                        width: selected ? 1.6 : 1.2,
-                      ),
-                      boxShadow:
-                          selected || already ? null : AppColors.cardShadow,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              goalEmoji(goal.id),
-                              style: const TextStyle(fontSize: 26),
-                            ),
-                            const Spacer(),
-                            if (already)
-                              Text(
-                                'Added',
-                                style: TextStyles.caption.copyWith(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 10,
-                                ),
-                              )
-                            else if (selected)
-                              AppIcon(
-                                AppIcons.check(),
-                                size: 20,
-                                color: AppColors.white.withValues(alpha: 0.95),
-                              ),
-                          ],
-                        ),
-                        const Spacer(),
-                        Text(
-                          goal.label,
-                          style: TextStyles.bodyBold.copyWith(
-                            fontSize: 15,
-                            color: selected
-                                ? AppColors.white
-                                : AppColors.textPrimary,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          goal.sub,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyles.caption.copyWith(
-                            fontSize: 11,
-                            height: 1.3,
-                            color: selected
-                                ? Colors.white.withValues(alpha: 0.78)
-                                : AppColors.textMuted,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              return _GoalGridTile(
+                emoji: goalEmoji(goal.id),
+                title: goal.label,
+                subtitle: goal.sub,
+                selected: selected,
+                alreadyAdded: already,
+                onTap: already ? null : () => _toggleGoal(goal.id),
               );
             },
-          ),
-          const SizedBox(height: 12),
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: _selectOther,
-              borderRadius: BorderRadius.circular(18),
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 220),
-                curve: Curves.easeOutCubic,
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: _otherSelected ? AppColors.primary : AppColors.surface,
-                  borderRadius: BorderRadius.circular(18),
-                  border: Border.all(
-                    color: _otherSelected
-                        ? AppColors.primary
-                        : AppColors.border,
-                    width: 1.4,
-                  ),
-                  boxShadow: _otherSelected ? null : AppColors.cardShadow,
-                ),
-                child: Row(
-                  children: [
-                    const Text('✏️', style: TextStyle(fontSize: 26)),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Something else',
-                            style: TextStyles.bodyBold.copyWith(
-                              fontSize: 15,
-                              color: _otherSelected
-                                  ? AppColors.white
-                                  : AppColors.textPrimary,
-                            ),
-                          ),
-                          const SizedBox(height: 3),
-                          Text(
-                            'Name a custom goal in your own words',
-                            style: TextStyles.caption.copyWith(
-                              fontSize: 11,
-                              color: _otherSelected
-                                  ? Colors.white.withValues(alpha: 0.75)
-                                  : AppColors.textMuted,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
           ),
           AnimatedSize(
             duration: const Duration(milliseconds: 220),
             curve: Curves.easeOutCubic,
             child: _otherSelected
                 ? Padding(
-                    padding: const EdgeInsets.only(top: 14),
+                    key: _otherFormKey,
+                    padding: const EdgeInsets.only(top: 0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -335,6 +221,7 @@ class _GoalSelectPageState extends State<GoalSelectPage> {
                           focusNode: _otherFocus,
                           onChanged: (_) => setState(() {}),
                           style: TextStyles.bodyBold,
+                          maxLines: 5,
                           cursorColor: AppColors.primary,
                           decoration: InputDecoration(
                             hintText: 'e.g. Dream car, sabbatical…',
@@ -367,6 +254,123 @@ class _GoalSelectPageState extends State<GoalSelectPage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _GoalGridTile extends StatelessWidget {
+  const _GoalGridTile({
+    required this.emoji,
+    required this.title,
+    required this.subtitle,
+    required this.selected,
+    required this.alreadyAdded,
+    required this.onTap,
+  });
+
+  final String emoji;
+  final String title;
+  final String subtitle;
+  final bool selected;
+  final bool alreadyAdded;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(18),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 220),
+          curve: Curves.easeOutCubic,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: alreadyAdded
+                ? AppColors.surfaceMuted
+                : selected
+                ? AppColors.primary
+                : AppColors.surface,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(
+              color: selected
+                  ? AppColors.primary
+                  : alreadyAdded
+                  ? AppColors.chipSelectedBg
+                  : AppColors.border,
+              width: selected ? 1.6 : 1.2,
+            ),
+            boxShadow: selected || alreadyAdded ? null : AppColors.cardShadow,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(emoji, style: const TextStyle(fontSize: 26)),
+                  const Spacer(),
+                  if (alreadyAdded)
+                    Text(
+                      'Added',
+                      style: TextStyles.caption.copyWith(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 10,
+                      ),
+                    )
+                  else if (selected)
+                    AppIcon(
+                      AppIcons.check(),
+                      size: 20,
+                      color: AppColors.white.withValues(alpha: 0.95),
+                    ),
+                ],
+              ),
+              const Spacer(),
+              Text(
+                title,
+                style: TextStyles.bodyBold.copyWith(
+                  fontSize: 15,
+                  color: selected ? AppColors.white : AppColors.textPrimary,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                subtitle,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyles.caption.copyWith(
+                  fontSize: 11,
+                  height: 1.3,
+                  color: selected
+                      ? Colors.white.withValues(alpha: 0.78)
+                      : AppColors.textMuted,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _OtherGoalTile extends StatelessWidget {
+  const _OtherGoalTile({required this.selected, required this.onTap});
+
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return _GoalGridTile(
+      emoji: '✏️',
+      title: 'Something else',
+      subtitle: 'Name a custom goal in your own words',
+      selected: selected,
+      alreadyAdded: false,
+      onTap: onTap,
     );
   }
 }

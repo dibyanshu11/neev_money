@@ -34,22 +34,13 @@ class SignupPage extends StatelessWidget {
             isSignIn
                 ? 'Welcome 👋\nEnter your number'
                 : 'Welcome 👋\nCreate your account',
-            style: TextStyles.heading1.copyWith(
-              fontSize: 30,
-              fontWeight: FontWeight.w800,
-              height: 1.2,
-              letterSpacing: 0.1,
-            ),
+            style: TextStyles.heading1,
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           if (!isSignIn) ...[
-            Text('Tell us your name and number. We’ll text a code to verify.',
-              style: TextStyles.body.copyWith(
-                color: AppColors.textSecondary,
-                fontSize: 14.5,
-                height: 1.6,
-                letterSpacing: 0.1,
-              ),
+            Text(
+              'Tell us your name and number. We’ll text a code to verify.',
+              style: TextStyles.subtitle,
             ),
             const SizedBox(height: 26),
           ],
@@ -64,9 +55,7 @@ class SignupPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
           ],
-          Text('MOBILE NUMBER', style: TextStyles.label.copyWith(
-            fontSize: 13,letterSpacing: 0.1, color: Colors.grey.shade800
-          ),),
+          Text('MOBILE NUMBER', style: TextStyles.label),
           const SizedBox(height: 8),
           Row(
             children: [
@@ -78,13 +67,7 @@ class SignupPage extends StatelessWidget {
                   color: AppColors.surfaceMuted,
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: Text(
-                  '+91',
-                  style: TextStyles.bodyBold.copyWith(
-                    color: AppColors.textPrimary,
-                    fontSize: 16,
-                  ),
-                ),
+                child: Text('+91', style: TextStyles.inputBold),
               ),
               const SizedBox(width: 10),
               Expanded(

@@ -73,7 +73,7 @@ class _RiskResultPageState extends State<RiskResultPage> {
                 style: TextStyles.label.copyWith(
                   color: AppColors.primary,
                   letterSpacing: 1.1,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   fontSize: 11,
                 ),
               ),
@@ -180,7 +180,7 @@ class _RiskResultPageState extends State<RiskResultPage> {
                         band.label,
                         style: TextStyles.caption.copyWith(
                           color: AppColors.primary,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
@@ -214,7 +214,7 @@ class _RiskResultPageState extends State<RiskResultPage> {
                     Text(
                       'Balanced',
                       style: TextStyles.caption.copyWith(
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         color: AppColors.primary,
                       ),
                     ),

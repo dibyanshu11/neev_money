@@ -152,7 +152,7 @@ class _QuizStepIndicator extends StatelessWidget {
                     color: i <= current
                         ? AppColors.white
                         : AppColors.textMuted,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     fontSize: 12,
                   ),
                 ),

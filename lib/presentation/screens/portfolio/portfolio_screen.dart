@@ -143,8 +143,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                               children: [
                                 Text(
                                   g.label,
-                                  style: TextStyles.bodyBold.copyWith(
-                                    fontSize: 13,
+                                  style: TextStyles.chip.copyWith(
                                     color: selected
                                         ? AppColors.white
                                         : AppColors.textPrimary,
@@ -154,7 +153,6 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                                 Text(
                                   '${Formatters.currency(g.amount)} · ${g.tenure}',
                                   style: TextStyles.caption.copyWith(
-                                    fontSize: 11,
                                     color: selected
                                         ? Colors.white.withValues(alpha: 0.8)
                                         : AppColors.textMuted,
@@ -224,9 +222,8 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                                 ),
                                 Text(
                                   '≈ ${Formatters.currency(goal.amount)}',
-                                  style: TextStyles.bodyBold.copyWith(
+                                  style: TextStyles.sectionTitle.copyWith(
                                     color: AppColors.white,
-                                    fontSize: 18,
                                   ),
                                 ),
                               ],
@@ -256,9 +253,8 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                         const SizedBox(height: 12),
                         Text(
                           "Illustrative, assuming ~12% p.a. Mutual funds are subject to market risk; returns aren't guaranteed.",
-                          style: TextStyles.caption.copyWith(
+                          style: TextStyles.micro.copyWith(
                             color: Colors.white.withValues(alpha: 0.65),
-                            fontSize: 10,
                             height: 1.35,
                           ),
                         ),
@@ -266,7 +262,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Text('Funds & allocation', style: TextStyles.heading3),
+                  Text('Funds & allocation', style: TextStyles.sectionTitle),
                   const SizedBox(height: 12),
                   for (final fund in funds)
                     _PlanFundTile(
@@ -335,7 +331,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                   Center(
                     child: Text(
                       'Regular plans · distributed by JK Capital · ARN-XXXXXX',
-                      style: TextStyles.caption.copyWith(fontSize: 10),
+                      style: TextStyles.micro,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -412,11 +408,7 @@ class _PlanFundTile extends StatelessWidget {
             ),
             child: Text(
               fund.initials,
-              style: TextStyles.caption.copyWith(
-                color: AppColors.white,
-                fontWeight: FontWeight.w800,
-                fontSize: 12,
-              ),
+              style: TextStyles.captionBold.copyWith(color: AppColors.white),
             ),
           ),
           const SizedBox(width: 12),
@@ -424,10 +416,7 @@ class _PlanFundTile extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  fund.name,
-                  style: TextStyles.bodyBold.copyWith(fontSize: 14),
-                ),
+                Text(fund.name, style: TextStyles.bodyBold),
                 const SizedBox(height: 2),
                 Text(fund.subtitle, style: TextStyles.caption),
               ],
@@ -436,10 +425,7 @@ class _PlanFundTile extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                '${fund.pct}%',
-                style: TextStyles.bodyBold.copyWith(fontSize: 15),
-              ),
+              Text('${fund.pct}%', style: TextStyles.amountSm),
               Text(
                 '${Formatters.currency(monthly)}/mo',
                 style: TextStyles.caption,

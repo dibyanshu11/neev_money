@@ -49,12 +49,12 @@ class FundAvatar extends StatelessWidget {
 
   static Color _colorForFund(String id) {
     return switch (id) {
-      '1' => const Color(0xFF6B4EFF),
-      '2' => const Color(0xFF1B7A4E),
-      '3' => const Color(0xFFE07A2F),
+      '1' => AppColors.primary,
+      '2' => AppColors.primaryLight,
+      '3' => AppColors.secondaryDark,
       '4' => const Color(0xFF5C6B7A),
-      '5' => AppColors.secondaryDark,
-      _ => AppColors.primary,
+      '5' => const Color(0xFF1B7A4E),
+      _ => AppColors.primarySoft,
     };
   }
 }

@@ -4,6 +4,18 @@ import 'package:new_app/core/constant/app_colors.dart';
 import 'package:new_app/core/constant/text_styles.dart';
 
 class AppTheme {
+  /// Inter on iOS Cupertino widgets (switches, dialogs, pickers).
+  static CupertinoThemeData get cupertino => CupertinoThemeData(
+        primaryColor: AppColors.primary,
+        textTheme: CupertinoTextThemeData(
+          textStyle: TextStyles.input.copyWith(color: AppColors.textPrimary),
+          actionTextStyle: TextStyles.link,
+          navTitleTextStyle: TextStyles.appBarTitle,
+          navLargeTitleTextStyle: TextStyles.heading1,
+          tabLabelTextStyle: TextStyles.navActive,
+        ),
+      );
+
   static ThemeData get light {
     final textTheme = TextStyles.materialTextTheme;
 
@@ -30,9 +42,7 @@ class AppTheme {
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: true,
-        titleTextStyle: TextStyles.heading2.copyWith(
-          color: AppColors.textPrimary,
-        ),
+        titleTextStyle: TextStyles.appBarTitle,
         iconTheme: const IconThemeData(color: AppColors.textPrimary, size: 22),
         actionsIconTheme:
             const IconThemeData(color: AppColors.textPrimary, size: 22),
@@ -58,11 +68,21 @@ class AppTheme {
           borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
         ),
       ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(textStyle: TextStyles.button),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(textStyle: TextStyles.button),
+      ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AppColors.primary,
-          textStyle: TextStyles.bodyBold.copyWith(color: AppColors.primary),
+          textStyle: TextStyles.link,
         ),
+      ),
+      listTileTheme: ListTileThemeData(
+        titleTextStyle: TextStyles.bodyBold,
+        subtitleTextStyle: TextStyles.caption,
       ),
       dividerColor: AppColors.divider,
       dividerTheme: const DividerThemeData(

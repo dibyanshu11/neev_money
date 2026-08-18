@@ -84,15 +84,15 @@ class _IntroSplash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 36),
+        padding: const EdgeInsets.symmetric(horizontal: 36),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _NeevMark(size: 108),
-            SizedBox(height: 36),
-            _Tagline(fontSize: 30),
+            const _NeevMark(size: 108),
+            const SizedBox(height: 36),
+            _Tagline(style: TextStyles.taglineSm),
           ],
         ),
       ),
@@ -113,19 +113,17 @@ class _GetStartedView extends StatelessWidget {
             const Spacer(flex: 2),
             const _NeevMark(size: 84),
             const SizedBox(height: 28),
-            const _Tagline(fontSize: 32),
+            _Tagline(style: TextStyles.tagline),
             const SizedBox(height: 18),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Text(
                 'Build real wealth, one steady step at a time.',
                 textAlign: TextAlign.center,
-                style: TextStyles.body.copyWith(
-                  color: Colors.white.withValues(alpha: 0.86),
-                  fontSize: 17,
-                  fontWeight: FontWeight.w400,
-                  height: 1.7,
-                  letterSpacing: 0.2,
+                style: TextStyles.subtitle.copyWith(
+                  color: Colors.white.withValues(alpha: 0.78),
+                  fontSize: 15,
+                  height: 1.5,
                 ),
               ),
             ),
@@ -133,29 +131,30 @@ class _GetStartedView extends StatelessWidget {
             LoadingNeevButton(
               title: 'Get started',
               accent: true,
+              
               onPressed: () async {
                 context.read<OnboardingBloc>().add(
-                      const OnboardingEvent.startFlow(),
-                    );
+                  const OnboardingEvent.startFlow(),
+                );
               },
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: 12),
             LoadingNeevButton(
               title: 'I already have an account',
               filled: false,
               onDark: true,
               onPressed: () async {
                 context.read<OnboardingBloc>().add(
-                      const OnboardingEvent.startSignIn(),
-                    );
+                  const OnboardingEvent.startSignIn(),
+                );
               },
             ),
             const SizedBox(height: 20),
             Text(
-              'from the desk of JK Capital · ARN-XXXXXX',
+              'From the house of JK Capital · ARN-XXXXXX',
               style: TextStyles.caption.copyWith(
-                color: Colors.white.withValues(alpha: 0.45),
-                fontSize: 14,
+                color: Colors.white.withValues(alpha: 0.42),
+                fontSize: 11,
               ),
               textAlign: TextAlign.center,
             ),
@@ -168,21 +167,34 @@ class _GetStartedView extends StatelessWidget {
 }
 
 class _Tagline extends StatelessWidget {
-  const _Tagline({required this.fontSize});
+  const _Tagline({required this.style});
 
-  final double fontSize;
+  final TextStyle style;
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      'Sapne aapke,\nNeev hamari.',
-      textAlign: TextAlign.center,
-      style: TextStyles.heading2.copyWith(
-        color: AppColors.white,
-        fontSize: fontSize,
-        fontWeight: FontWeight.w800,
-        height: 1.32,
-        letterSpacing: 0,
+    const taglineText = 'Sapne Aapke, Neev Hamari.';
+    final base = style.copyWith(
+      color: Colors.white.withValues(alpha: 0.96),
+      height: 1.32,
+      fontSize: style.fontSize ?? 32,
+      fontWeight: FontWeight.w700,
+    );
+    final accent = base.copyWith(color: AppColors.secondary);
+
+    return Semantics(
+      label: taglineText,
+      child: Text.rich(
+        TextSpan(
+          style: base,
+          children: [
+            TextSpan(text: 'Sapne ', style: accent),
+            const TextSpan(text: 'Aapke\n'),
+            const TextSpan(text: 'Neev '),
+            TextSpan(text: 'Hamari', style: accent),
+          ],
+        ),
+        textAlign: TextAlign.center,
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/core/constant/app_colors.dart';
+import 'package:new_app/core/constant/text_styles.dart';
 import 'package:new_app/core/constant/app_svg_assets.dart';
 import 'package:new_app/presentation/widgets/app_svg_icon.dart';
 
@@ -24,13 +25,11 @@ class NeevLogo extends StatelessWidget {
         if (showLabel) ...[
           SizedBox(height: size * 0.28),
           Text(
-            'Sapne aapke, Neev hamari.',
+            'Sapne Aapke Neev Hamari',
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: TextStyles.tagline.copyWith(
               fontSize: size * 0.22,
-              fontWeight: FontWeight.w600,
               color: labelColor,
-              height: 1.35,
             ),
           ),
         ],

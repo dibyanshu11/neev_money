@@ -133,12 +133,9 @@ class _NavTab extends StatelessWidget {
                 label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyles.caption.copyWith(
-                  fontSize: 10,
-                  height: 1.1,
-                  fontWeight: active ? FontWeight.w700 : FontWeight.w500,
-                  color: active ? activeColor : AppColors.textMuted,
-                ),
+                style: active
+                    ? TextStyles.navActive.copyWith(color: activeColor)
+                    : TextStyles.navInactive,
               ),
             ],
           ),

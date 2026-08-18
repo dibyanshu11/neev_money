@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:new_app/core/constant/app_colors.dart';
+import 'package:new_app/core/constant/text_styles.dart';
 import 'package:new_app/router/app_theme.dart';
 import 'package:new_app/router/route_manager.dart';
 import 'package:new_app/router/route_name.dart';
@@ -20,16 +23,22 @@ class NeevMoneyApp extends StatelessWidget {
       initialRoute: RouteName.splash,
       onGenerateRoute: RouteManager().generate,
       builder: (context, child) {
-        // Tap anywhere outside a field to dismiss the keyboard.
-        return GestureDetector(
-          onTap: () {
-            final focus = FocusManager.instance.primaryFocus;
-            if (focus != null && focus.hasFocus) {
-              focus.unfocus();
-            }
-          },
-          behavior: HitTestBehavior.translucent,
-          child: child,
+        // Inter everywhere — same on Android and iOS (not Roboto / SF Pro).
+        return CupertinoTheme(
+          data: AppTheme.cupertino,
+          child: DefaultTextStyle(
+            style: TextStyles.subtitle.copyWith(color: AppColors.textPrimary),
+            child: GestureDetector(
+              onTap: () {
+                final focus = FocusManager.instance.primaryFocus;
+                if (focus != null && focus.hasFocus) {
+                  focus.unfocus();
+                }
+              },
+              behavior: HitTestBehavior.translucent,
+              child: child,
+            ),
+          ),
         );
       },
     );

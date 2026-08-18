@@ -71,10 +71,8 @@ class FundCard extends StatelessWidget {
                       ),
                       child: Text(
                         'Invest',
-                        style: TextStyles.caption.copyWith(
-                          color: AppColors.black,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 13,
+                        style: TextStyles.chip.copyWith(
+                          color: AppColors.investButtonFg,
                         ),
                       ),
                     ),

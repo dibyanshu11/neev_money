@@ -47,6 +47,9 @@ class AppColors {
   static const linkBlue = Color(0xFF2563EB);
   static const securityBanner = Color(0xFFF2F9F6);
   static const investOrange = Color(0xFFF2A83D);
+  /// Gold Invest pills — background + label (matches design board).
+  static const investButtonBg = investOrange;
+  static const investButtonFg = textPrimary;
   static const alertBanner = Color(0xFFFFF6E8);
   static const returnsPill = Color(0xFF0C4941);
   static const chipSelectedBg = Color(0xFFE8F5F1);
