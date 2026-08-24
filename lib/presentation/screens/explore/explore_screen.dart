@@ -54,7 +54,7 @@ class ExploreScreen extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                'Find a fund',
+                                'Explore funds',
                                 style: TextStyles.heading1.copyWith(fontSize: 24),
                               ),
                             ),

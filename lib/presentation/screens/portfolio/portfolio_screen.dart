@@ -12,7 +12,6 @@ import 'package:new_app/presentation/widgets/charts/fund_line_chart.dart';
 import 'package:new_app/presentation/widgets/custom_bottom_nav.dart';
 import 'package:new_app/presentation/widgets/notifications_bell.dart';
 import 'package:new_app/presentation/widgets/whatsapp_fab.dart';
-import 'package:new_app/core/utils/toast_utils.dart';
 import 'package:new_app/router/route_manager.dart';
 
 class PortfolioScreen extends StatefulWidget {
@@ -25,35 +24,38 @@ class PortfolioScreen extends StatefulWidget {
 class _PortfolioScreenState extends State<PortfolioScreen> {
   int _goalIndex = 0;
 
-  static const _goals = <({
-    String id,
-    String label,
-    double amount,
-    String tenure,
-    double monthlySip,
-  })>[
-    (
-      id: 'home',
-      label: 'Home',
-      amount: 2500000,
-      tenure: '2032',
-      monthlySip: 8000,
-    ),
-    (
-      id: 'travel',
-      label: 'Travel',
-      amount: 400000,
-      tenure: '2027',
-      monthlySip: 5500,
-    ),
-    (
-      id: 'education',
-      label: "Child's future",
-      amount: 4000000,
-      tenure: '15 yrs',
-      monthlySip: 8000,
-    ),
-  ];
+  static const _goals =
+      <
+        ({
+          String id,
+          String label,
+          double amount,
+          String tenure,
+          double monthlySip,
+        })
+      >[
+        (
+          id: 'home',
+          label: 'Home',
+          amount: 2500000,
+          tenure: '2032',
+          monthlySip: 8000,
+        ),
+        (
+          id: 'travel',
+          label: 'Travel',
+          amount: 400000,
+          tenure: '2027',
+          monthlySip: 5500,
+        ),
+        (
+          id: 'education',
+          label: "Child's future",
+          amount: 4000000,
+          tenure: '15 yrs',
+          monthlySip: 8000,
+        ),
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +64,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         if (state.isLoading && state.portfolio == null) {
           return const ColoredBox(
             color: AppColors.background,
-            child: Center(
-              child: AppProgress(color: AppColors.primary),
-            ),
+            child: Center(child: AppProgress(color: AppColors.primary)),
           );
         }
 
@@ -134,8 +134,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                                     ? AppColors.primary
                                     : AppColors.border,
                               ),
-                              boxShadow:
-                                  selected ? null : AppColors.cardShadow,
+                              boxShadow: selected ? null : AppColors.cardShadow,
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -197,8 +196,9 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                                   Text(
                                     'Suggested monthly SIP',
                                     style: TextStyles.caption.copyWith(
-                                      color:
-                                          Colors.white.withValues(alpha: 0.72),
+                                      color: Colors.white.withValues(
+                                        alpha: 0.72,
+                                      ),
                                     ),
                                   ),
                                   Text(
@@ -216,8 +216,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                                 Text(
                                   'On track for',
                                   style: TextStyles.caption.copyWith(
-                                    color:
-                                        Colors.white.withValues(alpha: 0.72),
+                                    color: Colors.white.withValues(alpha: 0.72),
                                   ),
                                 ),
                                 Text(
@@ -250,9 +249,27 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                             ),
                           ],
                         ),
+                        const SizedBox(height: 10),
+                        const Row(
+                          children: [
+                            Expanded(
+                              child: _MiniStat(
+                                label: 'Aggressive',
+                                value: '16.8%',
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: _MiniStat(
+                                label: 'Conservative',
+                                value: '9.2%',
+                              ),
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 12),
                         Text(
-                          "Illustrative, assuming ~12% p.a. Mutual funds are subject to market risk; returns aren't guaranteed.",
+                          "Illustrative. Agg ~16.8% p.a. · Cons ~9.2% p.a. Mutual funds are subject to market risk; returns aren't guaranteed.",
                           style: TextStyles.micro.copyWith(
                             color: Colors.white.withValues(alpha: 0.65),
                             height: 1.35,
@@ -283,42 +300,43 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                       ),
                       child: Text(
                         'Start this plan · ${Formatters.currency(goal.monthlySip)}/mo',
-                        style:
-                            TextStyles.button.copyWith(color: AppColors.white),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        ToastUtils.showToast(
-                          context,
-                          message: 'Adjust opens after you start this plan.',
-                          type: ToastType.info,
-                        );
-                      },
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: AppColors.primary,
-                        side: const BorderSide(
-                          color: AppColors.primary,
-                          width: 1.4,
-                        ),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(28),
-                        ),
-                      ),
-                      child: Text(
-                        'Adjust amount or funds',
-                        style: TextStyles.bodyBold.copyWith(
-                          color: AppColors.primary,
+                        style: TextStyles.button.copyWith(
+                          color: AppColors.white,
                         ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 10),
+                  // SizedBox(
+                  //   width: double.infinity,
+                  //   child: OutlinedButton(
+                  //     onPressed: () {
+                  //       ToastUtils.showToast(
+                  //         context,
+                  //         message: 'Adjust opens after you start this plan.',
+                  //         type: ToastType.info,
+                  //       );
+                  //     },
+                  //     style: OutlinedButton.styleFrom(
+                  //       foregroundColor: AppColors.primary,
+                  //       side: const BorderSide(
+                  //         color: AppColors.primary,
+                  //         width: 1.4,
+                  //       ),
+                  //       padding: const EdgeInsets.symmetric(vertical: 16),
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(28),
+                  //       ),
+                  //     ),
+                  //     child: Text(
+                  //       'Adjust amount or funds',
+                  //       style: TextStyles.bodyBold.copyWith(
+                  //         color: AppColors.primary,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 10),
                   SizedBox(
                     width: double.infinity,
                     child: WhatsAppButton(

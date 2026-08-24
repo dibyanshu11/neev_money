@@ -105,12 +105,10 @@ class SuccessScreen extends StatelessWidget {
                 onTap: () => NavigateTo.mainShell(context, tab: 2),
               ),
               const SizedBox(height: 12),
-              TextButton(
-                onPressed: () => NavigateTo.mainShell(context),
-                child: Text(
-                  'Back to home',
-                  style: TextStyles.bodyBold.copyWith(color: AppColors.white),
-                ),
+              NeevOutlineButton(
+                title: 'Back to home',
+                onDark: true,
+                onTap: () => NavigateTo.mainShell(context),
               ),
               const SizedBox(height: 8),
             ],

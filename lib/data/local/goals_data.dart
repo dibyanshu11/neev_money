@@ -28,6 +28,45 @@ class GoalItem {
   final String shortCode;
   final String tenure;
 
+  GoalItem copyWith({
+    String? id,
+    String? title,
+    double? saved,
+    double? target,
+    double? progress,
+    String? badge,
+    Color? badgeBg,
+    Color? badgeFg,
+    Color? avatarColor,
+    String? shortCode,
+    String? tenure,
+  }) {
+    return GoalItem(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      saved: saved ?? this.saved,
+      target: target ?? this.target,
+      progress: progress ?? this.progress,
+      badge: badge ?? this.badge,
+      badgeBg: badgeBg ?? this.badgeBg,
+      badgeFg: badgeFg ?? this.badgeFg,
+      avatarColor: avatarColor ?? this.avatarColor,
+      shortCode: shortCode ?? this.shortCode,
+      tenure: tenure ?? this.tenure,
+    );
+  }
+
+  /// Replace a goal in [userGoals] or [demoGoals] by id.
+  static void updateInStores(GoalItem updated) {
+    final ui = userGoals.indexWhere((g) => g.id == updated.id);
+    if (ui >= 0) {
+      userGoals[ui] = updated;
+      return;
+    }
+    final di = demoGoals.indexWhere((g) => g.id == updated.id);
+    if (di >= 0) demoGoals[di] = updated;
+  }
+
   /// Two-letter code like HD, JT (for avatar).
   String get initials {
     if (shortCode.trim().isNotEmpty) {

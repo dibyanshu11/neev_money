@@ -142,7 +142,7 @@ class _GoalSelectPageState extends State<GoalSelectPage> {
           const SizedBox(height: 8),
           Text(
             bloc.savedGoals.isEmpty
-                ? 'Pick one or more. We’ll ask for an amount and timeline for each next.'
+                ? 'Pick one or more goals to get started.'
                 : 'Choose goals you haven’t added yet. You already have ${bloc.savedGoals.length} saved.',
             style: TextStyles.body,
           ),
@@ -155,9 +155,7 @@ class _GoalSelectPageState extends State<GoalSelectPage> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
-                count > 1
-                    ? '$count goals selected — set targets one by one'
-                    : '1 goal selected',
+                count > 1 ? '$count goals selected' : '1 goal selected',
                 style: TextStyles.caption.copyWith(
                   color: AppColors.primary,
                   fontWeight: FontWeight.w700,
@@ -201,52 +199,53 @@ class _GoalSelectPageState extends State<GoalSelectPage> {
           ),
           _otherSelected
               ? Padding(
-                padding: const EdgeInsets.only(top: 24.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Describe your goal',
-                      style: TextStyles.caption.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textMuted,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      controller: _otherController,
-                      focusNode: _otherFocus,
-                      onChanged: (_) => setState(() {}),
-                      style: TextStyles.bodyBold,
-                      maxLines: 5,
-                      cursorColor: AppColors.primary,
-                      decoration: InputDecoration(
-                        hintText: 'e.g. Dream car, sabbatical…',
-                        hintStyle: TextStyles.caption.copyWith(
+                  padding: const EdgeInsets.only(top: 24.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Describe your goal',
+                        style: TextStyles.caption.copyWith(
+                          fontWeight: FontWeight.w700,
                           color: AppColors.textMuted,
                         ),
-                        filled: true,
-                        fillColor: AppColors.surfaceMuted,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          borderSide: const BorderSide(
-                            color: AppColors.primary,
-                            width: 1.6,
+                      ),
+                      const SizedBox(height: 8),
+                      TextField(
+                        textInputAction: TextInputAction.done,
+                        controller: _otherController,
+                        focusNode: _otherFocus,
+                        onChanged: (_) => setState(() {}),
+                        style: TextStyles.bodyBold,
+                        maxLines: 5,
+                        cursorColor: AppColors.primary,
+                        decoration: InputDecoration(
+                          hintText: 'e.g. Dream car, sabbatical…',
+                          hintStyle: TextStyles.caption.copyWith(
+                            color: AppColors.textMuted,
+                          ),
+                          filled: true,
+                          fillColor: AppColors.surfaceMuted,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: BorderSide.none,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                            borderSide: const BorderSide(
+                              color: AppColors.primary,
+                              width: 1.6,
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
                           ),
                         ),
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 16,
-                        ),
                       ),
-                    ),
-                  ],
-                ),
-              )
+                    ],
+                  ),
+                )
               : const SizedBox.shrink(),
         ],
       ),

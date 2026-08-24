@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_app/core/constant/app_colors.dart';
 import 'package:new_app/core/constant/text_styles.dart';
+import 'package:new_app/core/extensions/widget_ext.dart';
 import 'package:new_app/presentation/blocs/onboarding/onboarding_bloc.dart';
 import 'package:new_app/presentation/blocs/onboarding/onboarding_event_state.dart';
 import 'package:new_app/presentation/screens/onboarding/shared/onboarding_widgets.dart';
@@ -33,10 +34,10 @@ class SignupPage extends StatelessWidget {
           Text(
             isSignIn
                 ? 'Welcome 👋\nEnter your number'
-                : 'Welcome 👋\nLets Create your account',
+                : "Welcome 👋\nLet's Create your account",
             style: TextStyles.heading1,
           ),
-          const SizedBox(height: 24),
+          10.heightBox,
           if (!isSignIn) ...[
             Text(
               'Tell us your name and number. We’ll text a code to verify.',

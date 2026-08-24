@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:new_app/domain/models/sip_model.dart';
+import 'package:new_app/data/local/goals_data.dart';
 import 'package:new_app/presentation/blocs/explore/explore_bloc.dart';
 import 'package:new_app/presentation/blocs/explore/explore_event_state.dart';
 import 'package:new_app/presentation/blocs/fund_detail/fund_detail_bloc.dart';
@@ -14,6 +15,7 @@ import 'package:new_app/presentation/blocs/sip/sip_bloc.dart';
 import 'package:new_app/presentation/blocs/sip/sip_event_state.dart';
 import 'package:new_app/presentation/screens/account/notifications_screen.dart';
 import 'package:new_app/presentation/screens/fund/fund_detail_screen.dart';
+import 'package:new_app/presentation/screens/goals/goal_tenure_amount_sheet.dart';
 import 'package:new_app/presentation/screens/goals/goals_screen.dart';
 import 'package:new_app/presentation/screens/main/main_shell.dart';
 import 'package:new_app/presentation/screens/main/main_tab_controller.dart';
@@ -24,8 +26,6 @@ import 'package:new_app/presentation/screens/sip/start_sip_screen.dart';
 import 'package:new_app/presentation/screens/sip/success_screen.dart';
 import 'package:new_app/router/route_name.dart';
 
-typedef RouteBuilder = Route<dynamic> Function(RouteSettings settings);
-
 final GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>();
 
 class RouteManager {
@@ -34,25 +34,18 @@ class RouteManager {
   factory RouteManager() => _instance;
 
   Route<dynamic> generate(RouteSettings settings) {
-    final builder = _routes[settings.name];
-    if (builder == null) {
-      return MaterialPageRoute(
-        builder: (_) => const Scaffold(
-          body: Center(child: Text('Route not found')),
-        ),
-      );
-    }
-    return builder(settings);
-  }
-
-  late final Map<String, RouteBuilder> _routes = {
-    RouteName.splash: (_) => _route(
+    switch (settings.name) {
+      case RouteName.splash:
+        return slideRoute(
           BlocProvider(
             create: (_) => OnboardingBloc(),
-            child: const OnboardingShell(),
+            child: OnboardingShell(
+              skipSplashIntro: settings.arguments == true,
+            ),
           ),
-        ),
-    RouteName.mainShell: (_) => _route(
+        );
+      case RouteName.mainShell:
+        return slideRoute(
           MultiBlocProvider(
             providers: [
               BlocProvider(
@@ -68,42 +61,60 @@ class RouteManager {
             ],
             child: const MainShell(),
           ),
-        ),
-    RouteName.goals: (_) => _route(const GoalsScreen()),
-    RouteName.notifications: (_) => _route(const NotificationsScreen()),
-    RouteName.fundDetail: (settings) {
-      final fundId = settings.arguments as String? ?? '1';
-      return _route(
-        BlocProvider(
-          create: (_) =>
-              FundDetailBloc()..add(FundDetailEvent.load(fundId)),
-          child: FundDetailScreen(fundId: fundId),
-        ),
-      );
-    },
-    RouteName.kycDetails: (settings) {
-      final fundId = settings.arguments as String? ?? '1';
-      return _route(KycDetailsScreen(fundId: fundId));
-    },
-    RouteName.startSip: (settings) {
-      final fundId = settings.arguments as String? ?? '1';
-      return _route(
-        BlocProvider(
-          create: (_) => SipBloc()..add(SipEvent.init(fundId)),
-          child: StartSipScreen(fundId: fundId),
-        ),
-      );
-    },
-    RouteName.confirmPay: (_) => _route(const ConfirmPayScreen()),
-    RouteName.success: (settings) => _route(
+        );
+      case RouteName.goals:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (_) => GoalsScreen(),
+        );
+      case RouteName.notifications:
+        return slideRoute(const NotificationsScreen());
+      case RouteName.fundDetail:
+        final fundId = settings.arguments as String? ?? '1';
+        return slideRoute(
+          BlocProvider(
+            create: (_) =>
+                FundDetailBloc()..add(FundDetailEvent.load(fundId)),
+            child: FundDetailScreen(fundId: fundId),
+          ),
+        );
+      case RouteName.kycDetails:
+        final kycFundId = settings.arguments as String? ?? '1';
+        return slideRoute(KycDetailsScreen(fundId: kycFundId));
+      case RouteName.startSip:
+        final sipFundId = settings.arguments as String? ?? '1';
+        return slideRoute(
+          BlocProvider(
+            create: (_) => SipBloc()..add(SipEvent.init(sipFundId)),
+            child: StartSipScreen(fundId: sipFundId),
+          ),
+        );
+      case RouteName.confirmPay:
+        return slideRoute(const ConfirmPayScreen());
+      case RouteName.success:
+        return slideRoute(
           SuccessScreen(
             confirmation: settings.arguments as SipConfirmation?,
           ),
-        ),
-  };
+        );
+      default:
+        return MaterialPageRoute(
+          builder: (_) => const Scaffold(
+            body: Center(child: Text('Route not found')),
+          ),
+        );
+    }
+  }
 
-  Route<dynamic> _route(Widget child) {
-    return PageRouteBuilder(
+  static Route<void> goalsRoute() {
+    return MaterialPageRoute(
+      settings: const RouteSettings(name: RouteName.goals),
+      builder: (_) => GoalsScreen(),
+    );
+  }
+
+  static Route<T> slideRoute<T extends Object?>(Widget child) {
+    return PageRouteBuilder<T>(
       pageBuilder: (_, __, ___) => child,
       transitionDuration: const Duration(milliseconds: 300),
       reverseTransitionDuration: const Duration(milliseconds: 260),
@@ -132,9 +143,14 @@ class RouteManager {
 
 class NavigateTo {
   /// Clears the stack and returns to splash (logged-out).
-  static void splash(BuildContext context) {
+  static void splash(BuildContext context, {bool showGetStarted = false}) {
     MainTabController.instance.goHome();
-    Navigator.pushNamedAndRemoveUntil(context, RouteName.splash, (_) => false);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      RouteName.splash,
+      (_) => false,
+      arguments: showGetStarted,
+    );
   }
 
   static void phoneEntry(BuildContext context) => splash(context);
@@ -154,14 +170,25 @@ class NavigateTo {
     );
   }
 
-  static void goals(BuildContext context) =>
-      Navigator.pushNamed(context, RouteName.goals);
+  static void goals(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        settings: const RouteSettings(name: RouteName.goals),
+        builder: (_) => GoalsScreen(),
+      ),
+    );
+  }
+
+  /// Opens tenure & amount bottom sheet — only from Edit button.
+  static Future<GoalItem?> editGoal(BuildContext context, GoalItem goal) {
+    return showGoalTenureAmountSheet(context, goal);
+  }
 
   /// From SIP success → Goals (keeps main shell under so back works).
   static void linkSipToGoal(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(
+    Navigator.pushAndRemoveUntil(
       context,
-      RouteName.goals,
+      RouteManager.goalsRoute(),
       (route) => route.settings.name == RouteName.mainShell,
     );
   }

@@ -23,7 +23,10 @@ const _splashLogoTile = Color(0xFF22554E);
 ///
 /// Logo is drawn with Flutter widgets (not SVG) so it appears on the first frame.
 class SplashPage extends StatefulWidget {
-  const SplashPage({super.key});
+  const SplashPage({super.key, this.skipIntro = false});
+
+  /// When true, skip the 2s brand splash and open Get started (logout).
+  final bool skipIntro;
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -38,6 +41,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
+    if (widget.skipIntro) {
+      _showWelcome = true;
+      return;
+    }
     // Show brand splash immediately — don't wait on prefs / SVG decode.
     _introTimer = Timer(_introDuration, () {
       if (mounted) setState(() => _showWelcome = true);

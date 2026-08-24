@@ -21,7 +21,7 @@ class RmConfirmedPage extends StatelessWidget {
 
     return OnboardingPage(
       bottom: NeevOutlineButton(
-        title: 'See recommended funds',
+        title: 'Continue',
         filled: true,
         onTap: () => bloc.add(const OnboardingEvent.continueFromRmConfirmed()),
       ),

@@ -109,15 +109,6 @@ class _FundRecsPageState extends State<FundRecsPage> {
           //   title: 'Adjust amount or funds',
           //   onTap: () => _openAdjustSheet(goal),
           // ),
-          const SizedBox(height: 10),
-          SizedBox(
-            width: double.infinity,
-            child: WhatsAppButton(
-              label: 'WhatsApp · speak to your RM',
-              message:
-                  'Hi, I want to discuss my ${goal.label} portfolio plan on Neev Money.',
-            ),
-          ),
           const SizedBox(height: 8),
           Text(
             'Regular plans · distributed by JK Capital · ARN-XXXXXX',
@@ -295,9 +286,27 @@ class _FundRecsPageState extends State<FundRecsPage> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 10),
+                const Row(
+                  children: [
+                    Expanded(
+                      child: _MiniStat(
+                        label: 'Aggressive',
+                        value: '16.8%',
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: _MiniStat(
+                        label: 'Conservative',
+                        value: '9.2%',
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 12),
                 Text(
-                  "Illustrative, assuming ~12% p.a. Mutual funds are subject to market risk; returns aren't guaranteed.",
+                  "Illustrative. Agg ~16.8% p.a. · Cons ~9.2% p.a. Mutual funds are subject to market risk; returns aren't guaranteed.",
                   style: TextStyles.caption.copyWith(
                     color: Colors.white.withValues(alpha: 0.65),
                     fontSize: 10,
@@ -345,6 +354,15 @@ class _FundRecsPageState extends State<FundRecsPage> {
                     }
                   : null,
             ),
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: WhatsAppButton(
+              label: 'WhatsApp · speak to your RM',
+              message:
+                  'Hi, I want to discuss my ${goal.label} portfolio plan on Neev Money.',
+            ),
+          ),
         ],
       ),
     );
@@ -452,8 +470,8 @@ class _AdjustPlanSheetState extends State<_AdjustPlanSheet> {
                 ),
               ),
             ),
-            Text('Adjust amount or funds', style: TextStyles.heading3),
-            const SizedBox(height: 6),
+            // Text('Adjust amount or funds', style: TextStyles.heading3),
+            // const SizedBox(height: 6),
             Text(
               widget.goal.label,
               style: TextStyles.caption.copyWith(color: AppColors.textMuted),

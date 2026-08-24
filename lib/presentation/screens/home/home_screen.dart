@@ -17,8 +17,18 @@ import 'package:new_app/presentation/widgets/goal_card.dart';
 import 'package:new_app/core/utils/toast_utils.dart';
 import 'package:new_app/router/route_manager.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  Future<void> _editGoal(GoalItem goal) async {
+    final updated = await NavigateTo.editGoal(context, goal);
+    if (updated != null && mounted) setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +96,7 @@ class HomeScreen extends StatelessWidget {
                         if (i > 0) const SizedBox(height: 10),
                         GoalCard(
                           goal: goalsPreview[i],
-                          onTap: () => NavigateTo.goals(context),
+                          onEdit: () => _editGoal(goalsPreview[i]),
                         ),
                       ],
                       if (hasInvestment && topHoldings.isNotEmpty) ...[

@@ -59,10 +59,10 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     OnboardingScreen.goalsReview,
     OnboardingScreen.quiz,
     OnboardingScreen.riskResult,
+    OnboardingScreen.fundRecs,
     OnboardingScreen.rmIntro,
     OnboardingScreen.rmSelect,
     OnboardingScreen.rmConfirmed,
-    OnboardingScreen.fundRecs,
     OnboardingScreen.success,
   ];
 
@@ -74,9 +74,9 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     OnboardingScreen.goalsReview: 5,
     OnboardingScreen.quiz: 6,
     OnboardingScreen.riskResult: 7,
-    OnboardingScreen.rmSelect: 8,
-    OnboardingScreen.rmConfirmed: 9,
-    OnboardingScreen.fundRecs: 10,
+    OnboardingScreen.fundRecs: 8,
+    OnboardingScreen.rmSelect: 9,
+    OnboardingScreen.rmConfirmed: 10,
   };
 
   /// Accumulated goals (Screen 5 — multiple goals with amount + tenure).
@@ -204,6 +204,9 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
       case OnboardingScreen.riskResult:
         return 3;
       case OnboardingScreen.fundRecs:
+      case OnboardingScreen.rmIntro:
+      case OnboardingScreen.rmSelect:
+      case OnboardingScreen.rmConfirmed:
         return 4;
       default:
         return 1;
@@ -375,13 +378,53 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
       pendingGoalIds.add(state.selectedGoalId!);
     }
     if (pendingGoalIds.isEmpty) return;
+
+    // Tenure, amount, and the next screen (goal detail / review) are hidden
+    // for now. Save selected goals without targets and continue to the quiz.
+    for (final id in List<String>.from(pendingGoalIds)) {
+      GoalOption? goal;
+      for (final g in goals) {
+        if (g.id == id) goal = g;
+      }
+      if (id == 'other') {
+        goal = GoalOption(
+          id: 'other',
+          label: (customGoalLabel?.isNotEmpty ?? false)
+              ? customGoalLabel!
+              : 'Custom goal',
+          sub: 'Your own target',
+          letter: 'O',
+        );
+      }
+      if (goal != null) {
+        savedGoals.removeWhere((g) => g.goalId == goal!.id);
+        savedGoals.add(
+          SavedGoalDraft(
+            goalId: goal.id,
+            label: goal.label,
+            amountLabel: 'TBD',
+            tenureLabel: 'TBD',
+            amountValue: 0,
+          ),
+        );
+      }
+    }
+    pendingGoalIds.clear();
     emit(state.copyWith(
-      selectedGoalId: pendingGoalIds.first,
-      amountId: null,
-      customAmount: '',
-      timeframeId: null,
-      screen: OnboardingScreen.goalDetail,
+      screen: OnboardingScreen.quiz,
+      quizStep: 0,
+      quizAnswers: {},
+      quizSelectedOption: null,
     ));
+
+    // Original: open tenure & amount (goal detail).
+    // emit(state.copyWith(
+    //   selectedGoalId: pendingGoalIds.first,
+    //   amountId: null,
+    //   customAmount: '',
+    //   timeframeId: null,
+    //   screen: OnboardingScreen.goalDetail,
+    // ));
   }
 
   void _onSkipGoalSelect(
@@ -545,7 +588,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   }
 
   void _onGoToRmIntro(GoToRmIntro event, Emitter<OnboardingState> emit) {
-    emit(state.copyWith(screen: OnboardingScreen.rmIntro));
+    emit(state.copyWith(screen: OnboardingScreen.fundRecs));
   }
 
   void _onRmIntroAutoAdvance(
@@ -573,11 +616,11 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     ContinueFromRmConfirmed event,
     Emitter<OnboardingState> emit,
   ) {
-    emit(state.copyWith(screen: OnboardingScreen.fundRecs));
+    emit(state.copyWith(screen: OnboardingScreen.success));
   }
 
   void _onConfirmInvest(ConfirmInvest event, Emitter<OnboardingState> emit) {
-    emit(state.copyWith(screen: OnboardingScreen.success));
+    emit(state.copyWith(screen: OnboardingScreen.rmIntro));
   }
 
   void _onGoToDashboard(GoToDashboard event, Emitter<OnboardingState> emit) {
@@ -775,7 +818,9 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
           quizSelectedOption: null,
         ));
       } else if (savedGoals.isNotEmpty) {
-        emit(state.copyWith(screen: OnboardingScreen.goalsReview));
+        // Goals review (tenure & amount) is hidden for now.
+        // emit(state.copyWith(screen: OnboardingScreen.goalsReview));
+        emit(state.copyWith(screen: OnboardingScreen.goalSelect));
       } else {
         emit(state.copyWith(screen: OnboardingScreen.goalSelect));
       }
@@ -792,16 +837,12 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     }
 
     if (screen == OnboardingScreen.fundRecs) {
-      if (state.selectedRmId != null) {
-        emit(state.copyWith(screen: OnboardingScreen.rmConfirmed));
-      } else {
-        emit(state.copyWith(screen: OnboardingScreen.riskResult));
-      }
+      emit(state.copyWith(screen: OnboardingScreen.riskResult));
       return;
     }
 
     if (screen == OnboardingScreen.rmSelect) {
-      emit(state.copyWith(screen: OnboardingScreen.riskResult));
+      emit(state.copyWith(screen: OnboardingScreen.fundRecs));
       return;
     }
 

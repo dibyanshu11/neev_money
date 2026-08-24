@@ -11,7 +11,7 @@ import 'package:new_app/router/route_manager.dart';
 
 /// Goals screen — stable header, scrollable list, add goals live.
 class GoalsScreen extends StatefulWidget {
-  const GoalsScreen({super.key});
+  GoalsScreen({super.key});
 
   @override
   State<GoalsScreen> createState() => _GoalsScreenState();
@@ -33,6 +33,14 @@ class _GoalsScreenState extends State<GoalsScreen> {
   void initState() {
     super.initState();
     _goals = [...userGoals, ...demoGoals];
+  }
+
+  Future<void> _editGoal(GoalItem goal) async {
+    final updated = await NavigateTo.editGoal(context, goal);
+    if (updated == null || !mounted) return;
+    setState(() {
+      _goals = [...userGoals, ...demoGoals];
+    });
   }
 
   Future<void> _openAddGoal() async {
@@ -139,7 +147,10 @@ class _GoalsScreenState extends State<GoalsScreen> {
           for (final g in _goals)
             Padding(
               padding: const EdgeInsets.only(bottom: 12),
-              child: GoalCard(goal: g),
+              child: GoalCard(
+                goal: g,
+                onEdit: () => _editGoal(g),
+              ),
             ),
           const SizedBox(height: 4),
           _NewGoalPlaceholder(onTap: _openAddGoal),

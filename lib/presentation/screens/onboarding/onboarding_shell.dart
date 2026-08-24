@@ -11,7 +11,9 @@ import 'package:new_app/presentation/widgets/onboarding/neev_outline_button.dart
 import 'package:new_app/router/route_manager.dart';
 
 class OnboardingShell extends StatefulWidget {
-  const OnboardingShell({super.key});
+  const OnboardingShell({super.key, this.skipSplashIntro = false});
+
+  final bool skipSplashIntro;
 
   @override
   State<OnboardingShell> createState() => _OnboardingShellState();
@@ -113,7 +115,7 @@ class _OnboardingShellState extends State<OnboardingShell> {
   Widget _buildScreen(OnboardingState state, OnboardingBloc bloc) {
     switch (state.screen) {
       case OnboardingScreen.splash:
-        return const SplashPage();
+        return SplashPage(skipIntro: widget.skipSplashIntro);
       case OnboardingScreen.signup:
         return SignupPage(state: state);
       case OnboardingScreen.otp:
