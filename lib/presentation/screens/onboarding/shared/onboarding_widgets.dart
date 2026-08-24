@@ -235,10 +235,13 @@ class _NeevTextFieldState extends State<NeevTextField> {
   @override
   void didUpdateWidget(covariant NeevTextField oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.value != oldWidget.value && widget.value != _controller.text) {
+
+    if (widget.value != oldWidget.value &&
+        widget.value != _controller.text) {
       _controller.text = widget.value;
-      _controller.selection =
-          TextSelection.collapsed(offset: widget.value.length);
+      _controller.selection = TextSelection.collapsed(
+        offset: widget.value.length,
+      );
     }
   }
 
@@ -250,16 +253,41 @@ class _NeevTextFieldState extends State<NeevTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final primary = AppColors.primary;
+
     return TextField(
       controller: _controller,
       onChanged: widget.onChanged,
       keyboardType: widget.keyboardType,
       inputFormatters: widget.inputFormatters,
       textAlign: widget.textAlign,
-      style: widget.style ?? TextStyles.inputBold,
+      style: widget.style ?? TextStyles.inputBold.copyWith(
+        color: AppColors.textPrimary,
+      ),
       decoration: neevInputDecoration(
         hint: widget.hint,
         bordered: widget.bordered,
+      ).copyWith(
+        filled: true,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(
+            color: primary.withValues(alpha: 0.30),
+            width: 1.1,
+          ),
+        ),
+
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(
+            color: primary.withValues(alpha: 0.55),
+            width: 1.5,
+          ),
+        ),
+
+        hintStyle: TextStyles.inputBold.copyWith(
+          color: AppColors.textMuted.withValues(alpha: 0.75),
+        ),
       ),
     );
   }
@@ -279,30 +307,50 @@ class OtpBoxes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primary = AppColors.primary;
+
     return Row(
       children: List.generate(length, (i) {
         final digit = i < value.length ? value[i] : '';
+
         final focused =
-            i == value.length || (value.length == length && i == length - 1);
+            i == value.length ||
+                (value.length == length && i == length - 1);
+
         return Expanded(
           child: Padding(
-            padding: EdgeInsets.only(right: i == length - 1 ? 0 : 8),
+            padding: EdgeInsets.only(
+              right: i == length - 1 ? 0 : 8,
+            ),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 180),
               curve: Curves.easeOutCubic,
               height: 56,
               alignment: Alignment.center,
               decoration: BoxDecoration(
+                // Same background style as the text field
                 color: AppColors.surfaceMuted,
+
                 borderRadius: BorderRadius.circular(14),
+
                 border: Border.all(
                   color: focused
-                      ? AppColors.primary
+                      ? primary.withValues(alpha: 0.55)
                       : digit.isNotEmpty
-                          ? AppColors.primary.withValues(alpha: 0.35)
-                          : AppColors.border,
-                  width: focused ? 2 : 1.2,
+                      ? primary.withValues(alpha: 0.30)
+                      : primary.withValues(alpha: 0.20),
+                  width: focused ? 1.5 : 1.1,
                 ),
+
+                boxShadow: [
+                  BoxShadow(
+                    color: primary.withValues(
+                      alpha: focused ? 0.08 : 0.035,
+                    ),
+                    blurRadius: focused ? 8 : 5,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
               ),
               child: Text(
                 digit,
@@ -342,6 +390,7 @@ class _OtpInputState extends State<OtpInput> {
     super.initState();
     _c = TextEditingController(text: widget.value);
     _focus = FocusNode();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted || _focus.context == null) return;
       _focus.requestFocus();
@@ -351,9 +400,12 @@ class _OtpInputState extends State<OtpInput> {
   @override
   void didUpdateWidget(covariant OtpInput oldWidget) {
     super.didUpdateWidget(oldWidget);
+
     if (widget.value != _c.text) {
       _c.text = widget.value;
-      _c.selection = TextSelection.collapsed(offset: widget.value.length);
+      _c.selection = TextSelection.collapsed(
+        offset: widget.value.length,
+      );
     }
   }
 
@@ -368,7 +420,10 @@ class _OtpInputState extends State<OtpInput> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        OtpBoxes(value: widget.value, onChanged: widget.onChanged),
+        OtpBoxes(
+          value: widget.value,
+          onChanged: widget.onChanged,
+        ),
         Positioned.fill(
           child: Opacity(
             opacity: 0.01,

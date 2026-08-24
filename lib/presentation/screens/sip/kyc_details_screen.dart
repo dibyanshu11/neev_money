@@ -148,16 +148,26 @@ class _KycDetailsScreenState extends State<KycDetailsScreen> {
                               const _FieldLabel('Gender'),
                               Container(
                                 height: 54,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 14),
+                                padding: const EdgeInsets.symmetric(horizontal: 14),
                                 decoration: BoxDecoration(
                                   color: AppColors.surfaceMuted,
                                   borderRadius: BorderRadius.circular(14),
+                                  border: Border.all(
+                                    color: AppColors.primary.withValues(alpha: 0.30),
+                                    width: 1.1,
+                                  ),
                                 ),
                                 child: DropdownButtonHideUnderline(
                                   child: DropdownButton<String>(
                                     value: _gender,
                                     isExpanded: true,
+                                    icon: Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      color: AppColors.textMuted,
+                                    ),
+                                    style: TextStyles.bodyBold.copyWith(
+                                      color: AppColors.textPrimary,
+                                    ),
                                     items: const [
                                       DropdownMenuItem(
                                         value: 'Male',
@@ -220,7 +230,7 @@ class _FieldLabel extends StatelessWidget {
       child: Text(
         text.toUpperCase(),
         style: TextStyles.label.copyWith(
-          color: AppColors.textMuted,
+          color: AppColors.textPrimary,
           letterSpacing: 1,
           fontSize: 11,
         ),
@@ -231,22 +241,48 @@ class _FieldLabel extends StatelessWidget {
 
 class _SoftField extends StatelessWidget {
   const _SoftField({required this.controller});
+
   final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-      style: TextStyles.bodyBold,
+      style: TextStyles.bodyBold.copyWith(
+        color: AppColors.textPrimary,
+      ),
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.surfaceMuted,
+
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide.none,
+          borderSide: BorderSide(
+            color: AppColors.primary.withValues(alpha: 0.20),
+            width: 1.1,
+          ),
         ),
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(
+            color: AppColors.primary.withValues(alpha: 0.30),
+            width: 1.1,
+          ),
+        ),
+
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(
+            color: AppColors.primary.withValues(alpha: 0.55),
+            width: 1.5,
+          ),
+        ),
+
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 14,
+          vertical: 16,
+        ),
       ),
     );
   }

@@ -139,22 +139,41 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   InputDecoration _decoration(String hint) {
     return InputDecoration(
       hintText: hint,
-      hintStyle: TextStyles.body.copyWith(color: AppColors.textMuted),
+      hintStyle: TextStyles.body.copyWith(
+        color: AppColors.textMuted.withValues(alpha: 0.75),
+      ),
+
       filled: true,
       fillColor: AppColors.surfaceMuted,
+
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
-        borderSide: BorderSide.none,
+        borderSide: BorderSide(
+          color: AppColors.primary.withValues(alpha: 0.20),
+          width: 1.1,
+        ),
       ),
+
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
-        borderSide: BorderSide.none,
+        borderSide: BorderSide(
+          color: AppColors.primary.withValues(alpha: 0.30),
+          width: 1.1,
+        ),
       ),
+
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
-        borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+        borderSide: BorderSide(
+          color: AppColors.primary.withValues(alpha: 0.55),
+          width: 1.5,
+        ),
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 14,
+        vertical: 14,
+      ),
     );
   }
 
@@ -162,7 +181,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Text(
       text.toUpperCase(),
       style: TextStyles.caption.copyWith(
-        color: AppColors.textMuted,
+        color: AppColors.textPrimary,
         fontWeight: FontWeight.w700,
         letterSpacing: 0.8,
         fontSize: 11,
@@ -321,6 +340,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     decoration: BoxDecoration(
                                       color: AppColors.surfaceMuted,
                                       borderRadius: BorderRadius.circular(14),
+                                      border: Border.all(
+                                        color: AppColors.primary.withValues(alpha: 0.30),
+                                        width: 1.1,
+                                      ),
                                     ),
                                     child: Text(
                                       '+91',

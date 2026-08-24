@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 class AppColors {
   // Brand — sampled from the design board.
   static const primary = Color(0xFF0C4941);
-  static const primarySoft = Color(0xFF184B46);
-  static const primaryLight = Color(0xFF22554E);
+  static const primarySoft = Color(0xFF17544C);
+  static const primaryLight = Color(0xFF2C645B);
+  // Additional primary tones for colorful theming
+  static const primaryExtraLight = Color(0xFFD8E8E5);
+  static const primaryExtraSoft = Color(0xFFEFF7F4);
   static const secondary = Color(0xFFF2A83D);
   static const secondaryDark = Color(0xFFC47D0A);
   static const secondarySoft = Color(0xFFFFF4DF);

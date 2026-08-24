@@ -46,7 +46,7 @@ class SignupPage extends StatelessWidget {
             const SizedBox(height: 26),
           ],
           if (!isSignIn) ...[
-            Text('YOUR NAME', style: TextStyles.label),
+            Text('YOUR NAME', style: TextStyles.label.copyWith(color: AppColors.textPrimary)),
             const SizedBox(height: 8),
             NeevTextField(
               value: state.name,
@@ -56,7 +56,7 @@ class SignupPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
           ],
-          Text('MOBILE NUMBER', style: TextStyles.label),
+          Text('MOBILE NUMBER', style: TextStyles.label.copyWith(color: AppColors.textPrimary)),
           const SizedBox(height: 8),
           Row(
             children: [
@@ -66,9 +66,18 @@ class SignupPage extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: AppColors.surfaceMuted,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(
+                    color: AppColors.primary.withValues(alpha: 0.30),
+                    width: 1.1,
+                  ),
                 ),
-                child: Text('+91', style: TextStyles.inputBold),
+                child: Text(
+                  '+91',
+                  style: TextStyles.inputBold.copyWith(
+                    color: AppColors.textPrimary,
+                  ),
+                ),
               ),
               const SizedBox(width: 10),
               Expanded(

@@ -4,7 +4,6 @@ import 'package:new_app/core/constant/text_styles.dart';
 import 'package:new_app/core/utils/formatters.dart';
 import 'package:new_app/data/local/goals_data.dart';
 
-/// Dashboard / goals list card — letter avatar, amount, status badge, optional edit.
 class GoalCard extends StatelessWidget {
   const GoalCard({
     super.key,
@@ -19,112 +18,123 @@ class GoalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: AppColors.white,
-      borderRadius: BorderRadius.circular(18),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: AppColors.cardBorder),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: onTap,
-                  borderRadius: BorderRadius.circular(12),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 52,
-                        height: 52,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: goal.avatarColor,
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        child: Text(
-                          goal.initials,
-                          style: TextStyles.bodyBold.copyWith(
-                            color: AppColors.white,
-                            fontSize: 16,
-                            letterSpacing: 0.4,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 14),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              goal.title,
-                              style: TextStyles.bodyBold.copyWith(
-                                color: AppColors.textPrimary,
-                                fontSize: 15,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              '${Formatters.currency(goal.saved)} of ${Formatters.currency(goal.target)}',
-                              style: TextStyles.caption,
-                            ),
-                            const SizedBox(height: 8),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
-                              ),
-                              decoration: BoxDecoration(
-                                color: goal.badgeBg,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Text(
-                                goal.badge,
-                                style: TextStyles.caption.copyWith(
-                                  color: goal.badgeFg,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+    final progress = goal.progress.clamp(0.0, 1.0);
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: AppColors.primaryExtraLight),
+        boxShadow: AppColors.softShadow,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: AppColors.primaryExtraLight,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Text(
+                  goal.initials,
+                  style: TextStyles.bodyBold.copyWith(
+                    color: AppColors.primary,
+                    fontSize: 16,
+                    letterSpacing: 0.4,
                   ),
                 ),
               ),
-            ),
-            if (onEdit != null) ...[
-              const SizedBox(width: 8),
-              Material(
-                color: AppColors.chipSelectedBg,
-                borderRadius: BorderRadius.circular(12),
-                child: InkWell(
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      goal.title,
+                      style: TextStyles.bodyBold.copyWith(
+                        color: AppColors.primary,
+                        fontSize: 15,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${Formatters.currency(goal.saved)} of ${Formatters.currency(goal.target)}',
+                      style: TextStyles.caption,
+                    ),
+                  ],
+                ),
+              ),
+              if (onEdit != null)
+                GestureDetector(
                   onTap: onEdit,
-                  borderRadius: BorderRadius.circular(12),
-                  child: Padding(
+                  child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 12,
-                      vertical: 10,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryExtraLight,
+                      borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
                       'Edit',
                       style: TextStyles.bodyBold.copyWith(
                         color: AppColors.primary,
-                        fontSize: 13,
+                        fontSize: 12,
                       ),
                     ),
                   ),
                 ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: LinearProgressIndicator(
+              value: progress,
+              minHeight: 6,
+              backgroundColor: AppColors.primaryExtraLight,
+              valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: goal.badgeBg,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  goal.badge,
+                  style: TextStyles.caption.copyWith(
+                    color: goal.badgeFg,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 10,
+                  ),
+                ),
+              ),
+              const Spacer(),
+              Text(
+                '${(progress * 100).toInt()}%',
+                style: TextStyles.bodyBold.copyWith(
+                  color: AppColors.primary,
+                  fontSize: 13,
+                ),
               ),
             ],
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

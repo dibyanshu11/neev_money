@@ -252,7 +252,6 @@ class _GoalSelectPageState extends State<GoalSelectPage> {
     );
   }
 }
-
 class _GoalGridTile extends StatelessWidget {
   const _GoalGridTile({
     required this.emoji,
@@ -272,85 +271,154 @@ class _GoalGridTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primary = AppColors.primary;
+
+    final goalColor = switch (title) {
+      'Home' => const Color(0xFF5B8DEF),
+      'Travel' => const Color(0xFF9B6BFF),
+      "Child's future" => const Color(0xFF38A88A),
+      'Retirement' => const Color(0xFFF29B38),
+      'Wealth creation' => const Color(0xFF45A85A),
+      'Emergency fund' => const Color(0xFFE76F6F),
+      _ => primary,
+    };
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(22),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 220),
           curve: Curves.easeOutCubic,
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
-            color: selected ? AppColors.primary : AppColors.surfaceMuted,
-            borderRadius: BorderRadius.circular(18),
+            color: selected
+                ? primary.withValues(alpha: 0.90)
+                : goalColor.withValues(alpha: 0.06),
+
+            borderRadius: BorderRadius.circular(22),
+
             border: Border.all(
-              color: selected ? AppColors.primary : AppColors.border,
-              width: selected ? 1.6 : 1.2,
+              color: selected
+                  ? primary
+                  : goalColor.withValues(alpha: 0.30),
+              width: selected ? 1.6 : 1.1,
             ),
-            boxShadow: selected
-                ? [
-                    BoxShadow(
-                      color: AppColors.primary.withValues(alpha: 0.4),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ]
-                : [
-                    BoxShadow(
-                      color: const Color(0xFF0C2E24).withValues(alpha: 0.08),
-                      blurRadius: 10,
-                      offset: const Offset(0, 3),
-                    ),
-                    BoxShadow(
-                      color: const Color(0xFF0C2E24).withValues(alpha: 0.04),
-                      blurRadius: 20,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
+
+            boxShadow: [
+              BoxShadow(
+                color: selected
+                    ? primary.withValues(alpha: 0.18)
+                    : goalColor.withValues(alpha: 0.07),
+                blurRadius: selected ? 14 : 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(emoji, style: const TextStyle(fontSize: 30)),
+                  // Goal icon
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 220),
+                    width: 55,
+                    height: 55,
+                    decoration: BoxDecoration(
+                      color: selected
+                          ? AppColors.white.withValues(alpha: 0.15)
+                          : goalColor.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(
+                        color: selected
+                            ? AppColors.white.withValues(alpha: 0.12)
+                            : goalColor.withValues(alpha: 0.18),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text(
+                        emoji,
+                        style: const TextStyle(
+                          fontSize: 35,
+                        ),
+                      ),
+                    ),
+                  ),
+
                   const Spacer(),
-                  if (alreadyAdded)
-                    Text(
-                      'Added',
-                      style: TextStyles.caption.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 10,
+
+                  if (selected && !alreadyAdded)
+                    Container(
+                      width: 28,
+                      height: 28,
+                      decoration: BoxDecoration(
+                        color: AppColors.white.withValues(alpha: 0.18),
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: AppColors.white.withValues(alpha: 0.30),
+                          width: 1,
+                        ),
+                      ),
+                      child: AppIcon(
+                        AppIcons.check(),
+                        size: 17,
+                        color: AppColors.white,
                       ),
                     )
-                  else if (selected)
-                    AppIcon(
-                      AppIcons.check(),
-                      size: 20,
-                      color: AppColors.white.withValues(alpha: 0.95),
+                  else if (alreadyAdded)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        color: goalColor.withValues(alpha: 0.10),
+                        borderRadius: BorderRadius.circular(9),
+                        border: Border.all(
+                          color: goalColor.withValues(alpha: 0.16),
+                        ),
+                      ),
+                      child: Text(
+                        'Added',
+                        style: TextStyles.caption.copyWith(
+                          color: goalColor,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 10,
+                        ),
+                      ),
                     ),
                 ],
               ),
+
               const Spacer(),
+
               Text(
                 title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyles.bodyBold.copyWith(
                   fontSize: 15,
-                  color: selected ? AppColors.white : AppColors.textPrimary,
+                  height: 1.2,
+                  color: selected
+                      ? AppColors.white
+                      : AppColors.textPrimary,
                 ),
               ),
-              const SizedBox(height: 4),
+
+              const SizedBox(height: 6),
+
               Text(
                 subtitle,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyles.caption.copyWith(
                   fontSize: 11,
-                  height: 1.3,
+                  height: 1.35,
                   color: selected
-                      ? Colors.white.withValues(alpha: 0.78)
+                      ? AppColors.white.withValues(alpha: 0.78)
                       : AppColors.textMuted,
                 ),
               ),
