@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/core/constant/app_colors.dart';
-import 'package:new_app/core/constant/text_styles.dart';
-import 'package:new_app/domain/models/portfolio_model.dart';
+import 'package:new_app/core/constants/app_colors.dart';
+import 'package:new_app/core/constants/text_styles.dart';
+import 'package:new_app/domain/entities/portfolio_model.dart';
 
 class AllocationBarChart extends StatelessWidget {
   const AllocationBarChart({

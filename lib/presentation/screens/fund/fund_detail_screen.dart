@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/core/constant/app_colors.dart';
-import 'package:new_app/core/constant/text_styles.dart';
+import 'package:new_app/core/constants/app_colors.dart';
+import 'package:new_app/core/constants/text_styles.dart';
 import 'package:new_app/core/utils/formatters.dart';
 import 'package:new_app/core/utils/platform_icons.dart';
-import 'package:new_app/domain/models/fund_model.dart';
+import 'package:new_app/domain/entities/fund_model.dart';
 import 'package:new_app/presentation/blocs/fund_detail/fund_detail_bloc.dart';
 import 'package:new_app/presentation/blocs/fund_detail/fund_detail_event_state.dart';
 import 'package:new_app/presentation/widgets/app_back_button.dart';
@@ -12,7 +12,7 @@ import 'package:new_app/presentation/widgets/app_button.dart';
 import 'package:new_app/presentation/widgets/charts/fund_line_chart.dart';
 import 'package:new_app/presentation/widgets/fund_list_tile.dart';
 import 'package:new_app/presentation/widgets/watchlist_toggle_button.dart';
-import 'package:new_app/router/route_manager.dart';
+import 'package:new_app/app/router/app_router.dart';
 
 class FundDetailScreen extends StatelessWidget {
   const FundDetailScreen({super.key, required this.fundId});

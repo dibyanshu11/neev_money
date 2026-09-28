@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/core/constant/app_colors.dart';
-import 'package:new_app/core/constant/app_icon_sizes.dart';
-import 'package:new_app/core/constant/text_styles.dart';
+import 'package:new_app/core/constants/app_colors.dart';
+import 'package:new_app/core/constants/app_icon_sizes.dart';
+import 'package:new_app/core/constants/text_styles.dart';
 import 'package:new_app/core/utils/formatters.dart';
 import 'package:new_app/core/utils/platform_icons.dart';
-import 'package:new_app/data/local/mock_data.dart';
-import 'package:new_app/domain/models/fund_model.dart';
+import 'package:new_app/data/datasources/local/mock_data.dart';
+import 'package:new_app/domain/entities/fund_model.dart';
 import 'package:new_app/presentation/blocs/explore/explore_bloc.dart';
 import 'package:new_app/presentation/blocs/explore/explore_event_state.dart';
 import 'package:new_app/presentation/widgets/common_cards.dart';
@@ -14,7 +14,7 @@ import 'package:new_app/presentation/widgets/custom_bottom_nav.dart';
 import 'package:new_app/presentation/widgets/fund_list_tile.dart';
 import 'package:new_app/presentation/widgets/notifications_bell.dart';
 import 'package:new_app/presentation/widgets/watchlist_toggle_button.dart';
-import 'package:new_app/router/route_manager.dart';
+import 'package:new_app/app/router/app_router.dart';
 
 const _filterChips = [
   'For you',

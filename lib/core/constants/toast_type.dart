@@ -1,6 +1,6 @@
 import 'dart:ui' show Color;
 
-import 'package:new_app/core/constant/app_svg_assets.dart';
+import 'package:new_app/core/constants/app_svg_assets.dart';
 
 enum ToastType {
   success(

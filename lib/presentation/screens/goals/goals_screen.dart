@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/core/constant/app_colors.dart';
-import 'package:new_app/core/constant/text_styles.dart';
-import 'package:new_app/core/constant/app_icon_sizes.dart';
+import 'package:new_app/core/constants/app_colors.dart';
+import 'package:new_app/core/constants/text_styles.dart';
+import 'package:new_app/core/constants/app_icon_sizes.dart';
 import 'package:new_app/core/utils/platform_icons.dart';
-import 'package:new_app/data/local/goals_data.dart';
+import 'package:new_app/data/datasources/local/goals_data.dart';
 import 'package:new_app/presentation/widgets/goal_card.dart';
 import 'package:new_app/presentation/widgets/app_back_button.dart';
 import 'package:new_app/core/utils/toast_utils.dart';
-import 'package:new_app/router/route_manager.dart';
+import 'package:new_app/app/router/app_router.dart';
 
 /// Goals screen — stable header, scrollable list, add goals live.
 class GoalsScreen extends StatefulWidget {

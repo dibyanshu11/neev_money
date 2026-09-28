@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:new_app/core/constant/app_colors.dart';
-import 'package:new_app/core/constant/app_icon_sizes.dart';
-import 'package:new_app/core/constant/text_styles.dart';
+import 'package:new_app/core/constants/app_colors.dart';
+import 'package:new_app/core/constants/app_icon_sizes.dart';
+import 'package:new_app/core/constants/text_styles.dart';
 import 'package:new_app/core/utils/platform_icons.dart';
-import 'package:new_app/data/local/transaction_mock.dart';
+import 'package:new_app/data/datasources/local/transaction_mock.dart';
 import 'package:new_app/presentation/widgets/app_back_button.dart';
 
 class TransactionsScreen extends StatelessWidget {

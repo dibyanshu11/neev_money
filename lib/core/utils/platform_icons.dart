@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:new_app/core/constant/app_colors.dart';
-import 'package:new_app/core/constant/app_icon_sizes.dart';
-import 'package:new_app/core/constant/app_svg_assets.dart';
+import 'package:new_app/core/constants/app_colors.dart';
+import 'package:new_app/core/constants/app_icon_sizes.dart';
+import 'package:new_app/core/constants/app_svg_assets.dart';
 import 'package:new_app/presentation/widgets/app_svg_icon.dart';
 
 /// Icon reference — prefers bundled SVG, falls back to platform glyph when needed.

@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:new_app/core/constant/app_colors.dart';
+import 'package:new_app/core/constants/app_colors.dart';
 import 'package:new_app/core/utils/chart_data.dart';
 
 class FundLineChart extends StatelessWidget {

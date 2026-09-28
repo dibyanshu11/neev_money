@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/core/constant/app_colors.dart';
-import 'package:new_app/core/constant/text_styles.dart';
-import 'package:new_app/data/local/user_prefs.dart';
+import 'package:new_app/core/constants/app_colors.dart';
+import 'package:new_app/core/constants/text_styles.dart';
+import 'package:new_app/data/datasources/local/user_prefs.dart';
 import 'package:new_app/presentation/blocs/onboarding/onboarding_bloc.dart';
 import 'package:new_app/presentation/blocs/onboarding/onboarding_event_state.dart';
 import 'package:new_app/presentation/widgets/app_dialogs.dart';
-import 'package:new_app/router/route_manager.dart';
+import 'package:new_app/app/router/app_router.dart';
 
 /// Splash palette sampled from the brand board: the canvas fades from the deep
 /// brand green at the top to a darker green behind the CTAs.

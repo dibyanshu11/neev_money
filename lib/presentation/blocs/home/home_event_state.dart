@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:new_app/domain/models/fund_model.dart';
-import 'package:new_app/domain/models/portfolio_model.dart';
-import 'package:new_app/domain/models/user_model.dart';
+import 'package:new_app/domain/entities/fund_model.dart';
+import 'package:new_app/domain/entities/portfolio_model.dart';
+import 'package:new_app/domain/entities/user_model.dart';
 
 part 'home_event_state.freezed.dart';
 

@@ -1,13 +1,14 @@
 import 'dart:math' as math;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/domain/models/sip_model.dart';
-import 'package:new_app/domain/repository/fund_repository.dart';
+import 'package:new_app/app/di/injection.dart';
+import 'package:new_app/domain/entities/sip_model.dart';
+import 'package:new_app/domain/usecases/fund_usecase.dart';
 import 'package:new_app/presentation/blocs/sip/sip_event_state.dart';
 
 class SipBloc extends Bloc<SipEvent, SipState> {
-  SipBloc({FundRepository? repository})
-      : _repository = repository ?? FundRepository(),
+  SipBloc({FundUseCase? fundUseCase})
+      : _fundUseCase = fundUseCase ?? Injection.fundUseCase,
         super(SipState.initial()) {
     on<InitSip>(_onInit);
     on<AmountChanged>(_onAmountChanged);
@@ -17,7 +18,7 @@ class SipBloc extends Bloc<SipEvent, SipState> {
     on<SubmitSip>(_onSubmit);
   }
 
-  final FundRepository _repository;
+  final FundUseCase _fundUseCase;
 
   /// SIP future value at ~14% p.a. over 10 years (matches design copy).
   static double futureValue(
@@ -32,7 +33,7 @@ class SipBloc extends Bloc<SipEvent, SipState> {
 
   Future<void> _onInit(InitSip event, Emitter<SipState> emit) async {
     emit(state.copyWith(isLoading: true));
-    final result = await _repository.getFundById(event.fundId);
+    final result = await _fundUseCase.getFundById(event.fundId);
     result.fold(
       (f) => emit(state.copyWith(isLoading: false, error: 'Fund not found')),
       (fund) => emit(state.copyWith(isLoading: false, fund: fund)),
@@ -65,7 +66,7 @@ class SipBloc extends Bloc<SipEvent, SipState> {
       paymentMethod: state.paymentMethod,
       projectedValue: futureValue(state.amount),
     );
-    final result = await _repository.createSip(sip);
+    final result = await _fundUseCase.createSip(sip);
     result.fold(
       (f) => emit(state.copyWith(isSubmitting: false, error: 'Payment failed')),
       (confirmation) => emit(

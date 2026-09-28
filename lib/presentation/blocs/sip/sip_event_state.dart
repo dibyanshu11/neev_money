@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:new_app/domain/models/fund_model.dart';
-import 'package:new_app/domain/models/sip_model.dart';
+import 'package:new_app/domain/entities/fund_model.dart';
+import 'package:new_app/domain/entities/sip_model.dart';
 
 part 'sip_event_state.freezed.dart';
 

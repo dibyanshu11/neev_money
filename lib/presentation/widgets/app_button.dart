@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:new_app/core/constant/app_colors.dart';
-import 'package:new_app/core/constant/text_styles.dart';
+import 'package:new_app/core/constants/app_colors.dart';
+import 'package:new_app/core/constants/text_styles.dart';
 import 'package:new_app/core/utils/platform_icons.dart';
 
 /// Primary CTA with in-button platform loader that morphs into a circle.

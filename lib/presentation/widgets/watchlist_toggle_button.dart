@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/core/constant/app_colors.dart';
-import 'package:new_app/core/constant/app_icon_sizes.dart';
+import 'package:new_app/core/constants/app_colors.dart';
+import 'package:new_app/core/constants/app_icon_sizes.dart';
 import 'package:new_app/core/utils/platform_icons.dart';
 import 'package:new_app/core/utils/toast_utils.dart';
-import 'package:new_app/data/local/watchlist_storage.dart';
+import 'package:new_app/data/datasources/local/watchlist_storage.dart';
 
 /// Toggle fund on/off watchlist (favorite). Persists via [WatchlistStorage].
 class WatchlistToggleButton extends StatefulWidget {

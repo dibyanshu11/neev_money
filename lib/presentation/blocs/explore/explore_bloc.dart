@@ -1,22 +1,23 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/domain/repository/fund_repository.dart';
-import 'package:new_app/domain/models/fund_model.dart';
+import 'package:new_app/app/di/injection.dart';
+import 'package:new_app/domain/entities/fund_model.dart';
+import 'package:new_app/domain/usecases/fund_usecase.dart';
 import 'package:new_app/presentation/blocs/explore/explore_event_state.dart';
 
 class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
-  ExploreBloc({FundRepository? repository})
-      : _repository = repository ?? FundRepository(),
+  ExploreBloc({FundUseCase? fundUseCase})
+      : _fundUseCase = fundUseCase ?? Injection.fundUseCase,
         super(ExploreState.initial()) {
     on<LoadExplore>(_onLoad);
     on<FilterChanged>(_onFilterChanged);
     on<SearchChanged>(_onSearchChanged);
   }
 
-  final FundRepository _repository;
+  final FundUseCase _fundUseCase;
 
   Future<void> _onLoad(LoadExplore event, Emitter<ExploreState> emit) async {
     emit(state.copyWith(isLoading: true));
-    final result = await _repository.getFunds();
+    final result = await _fundUseCase.getFunds();
     result.fold(
       (f) => emit(state.copyWith(isLoading: false, error: 'Failed to load')),
       (funds) => emit(state.copyWith(
@@ -32,7 +33,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
     Emitter<ExploreState> emit,
   ) async {
     emit(state.copyWith(isLoading: true, selectedFilter: event.category));
-    final result = await _repository.getFunds(category: event.category);
+    final result = await _fundUseCase.getFunds(category: event.category);
     result.fold(
       (f) => emit(state.copyWith(isLoading: false)),
       (funds) {

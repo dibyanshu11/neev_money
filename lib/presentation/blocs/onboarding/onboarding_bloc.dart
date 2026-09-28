@@ -1,13 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:new_app/core/errors/app_failure_handling.dart';
 import 'package:new_app/core/utils/formatters.dart';
-import 'package:new_app/data/local/onboarding_data.dart';
-import 'package:new_app/data/local/user_prefs.dart';
+import 'package:new_app/data/datasources/local/onboarding_data.dart';
+import 'package:new_app/data/datasources/local/user_prefs.dart';
+import 'package:new_app/app/di/injection.dart';
+import 'package:new_app/domain/usecases/auth_usecase.dart';
 import 'package:new_app/presentation/blocs/onboarding/onboarding_event_state.dart';
 
 class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
-  OnboardingBloc() : super(OnboardingState.initial()) {
+  OnboardingBloc({AuthUseCase? authUseCase})
+      : _authUseCase = authUseCase ?? Injection.authUseCase,
+        super(OnboardingState.initial()) {
     on<StartFlow>(_onStartFlow);
     on<StartSignIn>(_onStartSignIn);
     on<NameChanged>(_onNameChanged);
@@ -49,6 +54,8 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     on<Restart>(_onRestart);
     on<GoBack>(_onGoBack);
   }
+
+  final AuthUseCase _authUseCase;
 
   static const _onboardingOrder = <OnboardingScreen>[
     OnboardingScreen.splash,
@@ -302,18 +309,34 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   ) async {
     if (!signupValid) return;
     emit(state.copyWith(isBusy: true));
-    await Future<void>.delayed(const Duration(milliseconds: 700));
-    final name = state.name.trim().isEmpty ? 'Investor' : state.name;
-    emit(state.copyWith(
-      screen: OnboardingScreen.otp,
-      isBusy: false,
-      otp: '',
-      name: name,
-    ));
+    final result = await _authUseCase.sendOtp(state.phone);
+    result.fold(
+      (failure) {
+        showAppFailure(failure);
+        emit(state.copyWith(isBusy: false));
+      },
+      (_) {
+        final name = state.name.trim().isEmpty ? 'Investor' : state.name;
+        emit(state.copyWith(
+          screen: OnboardingScreen.otp,
+          isBusy: false,
+          otp: '',
+          name: name,
+        ));
+      },
+    );
   }
 
-  void _onResendOtp(ResendOtp event, Emitter<OnboardingState> emit) {
-    emit(state.copyWith(otp: ''));
+  Future<void> _onResendOtp(ResendOtp event, Emitter<OnboardingState> emit) async {
+    emit(state.copyWith(otp: '', isBusy: true));
+    final result = await _authUseCase.sendOtp(state.phone);
+    result.fold(
+      (failure) {
+        showAppFailure(failure);
+        emit(state.copyWith(isBusy: false));
+      },
+      (_) => emit(state.copyWith(isBusy: false)),
+    );
   }
 
   Future<void> _onVerifyOtp(
@@ -322,23 +345,31 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   ) async {
     if (!otpValid) return;
     emit(state.copyWith(isBusy: true));
-    await Future<void>.delayed(const Duration(milliseconds: 700));
-    final name =
-        state.name.trim().isEmpty ? 'Investor' : state.name.trim();
-    await UserPrefs.instance.saveAuthIdentity(name: name, phone: state.phone);
-    if (state.isReturningUser) {
-      emit(state.copyWith(
-        isBusy: false,
-        name: name,
-        screen: OnboardingScreen.enterApp,
-      ));
-      return;
-    }
-    emit(state.copyWith(
-      name: name,
-      screen: OnboardingScreen.goalSelect,
-      isBusy: false,
-    ));
+    final result = await _authUseCase.verifyOtp(state.phone, state.otp);
+    await result.fold(
+      (failure) async {
+        showAppFailure(failure);
+        emit(state.copyWith(isBusy: false));
+      },
+      (_) async {
+        final name =
+            state.name.trim().isEmpty ? 'Investor' : state.name.trim();
+        await UserPrefs.instance.saveAuthIdentity(name: name, phone: state.phone);
+        if (state.isReturningUser) {
+          emit(state.copyWith(
+            isBusy: false,
+            name: name,
+            screen: OnboardingScreen.enterApp,
+          ));
+          return;
+        }
+        emit(state.copyWith(
+          name: name,
+          screen: OnboardingScreen.goalSelect,
+          isBusy: false,
+        ));
+      },
+    );
   }
 
   void _onGoalSelected(GoalSelected event, Emitter<OnboardingState> emit) {

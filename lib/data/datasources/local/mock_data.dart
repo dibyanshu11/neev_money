@@ -1,7 +1,7 @@
-import 'package:new_app/domain/models/fund_model.dart';
-import 'package:new_app/domain/models/goal_option.dart';
-import 'package:new_app/domain/models/portfolio_model.dart';
-import 'package:new_app/domain/models/user_model.dart';
+import 'package:new_app/domain/entities/fund_model.dart';
+import 'package:new_app/domain/entities/goal_option.dart';
+import 'package:new_app/domain/entities/portfolio_model.dart';
+import 'package:new_app/domain/entities/user_model.dart';
 
 class MockData {
   static const user = UserModel(

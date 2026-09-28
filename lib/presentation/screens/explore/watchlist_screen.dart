@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/core/constant/app_colors.dart';
-import 'package:new_app/core/constant/text_styles.dart';
+import 'package:new_app/core/constants/app_colors.dart';
+import 'package:new_app/core/constants/text_styles.dart';
 import 'package:new_app/core/utils/formatters.dart';
 import 'package:new_app/core/utils/platform_icons.dart';
-import 'package:new_app/data/local/mock_data.dart';
-import 'package:new_app/data/local/watchlist_storage.dart';
+import 'package:new_app/data/datasources/local/mock_data.dart';
+import 'package:new_app/data/datasources/local/watchlist_storage.dart';
 import 'package:new_app/presentation/widgets/app_back_button.dart';
 import 'package:new_app/presentation/widgets/app_button.dart';
 import 'package:new_app/presentation/widgets/fund_list_tile.dart';
-import 'package:new_app/router/route_manager.dart';
+import 'package:new_app/app/router/app_router.dart';
 
 class WatchlistScreen extends StatefulWidget {
   const WatchlistScreen({super.key});

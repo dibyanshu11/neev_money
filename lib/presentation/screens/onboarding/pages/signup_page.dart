@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/core/constant/app_colors.dart';
-import 'package:new_app/core/constant/text_styles.dart';
+import 'package:new_app/core/constants/app_colors.dart';
+import 'package:new_app/core/constants/text_styles.dart';
 import 'package:new_app/core/extensions/widget_ext.dart';
 import 'package:new_app/presentation/blocs/onboarding/onboarding_bloc.dart';
 import 'package:new_app/presentation/blocs/onboarding/onboarding_event_state.dart';

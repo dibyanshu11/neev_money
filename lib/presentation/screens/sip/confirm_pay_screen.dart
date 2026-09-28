@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/core/constant/app_colors.dart';
-import 'package:new_app/core/constant/text_styles.dart';
+import 'package:new_app/core/constants/app_colors.dart';
+import 'package:new_app/core/constants/text_styles.dart';
 import 'package:new_app/core/utils/formatters.dart';
 import 'package:new_app/presentation/blocs/sip/sip_bloc.dart';
 import 'package:new_app/presentation/blocs/sip/sip_event_state.dart';
 import 'package:new_app/presentation/widgets/app_back_button.dart';
-import 'package:new_app/core/constant/app_icon_sizes.dart';
+import 'package:new_app/core/constants/app_icon_sizes.dart';
 import 'package:new_app/core/utils/platform_icons.dart';
 import 'package:new_app/presentation/widgets/app_button.dart';
 import 'package:new_app/presentation/widgets/common_cards.dart';
 import 'package:new_app/core/utils/toast_utils.dart';
-import 'package:new_app/router/route_manager.dart';
+import 'package:new_app/app/router/app_router.dart';
 
 class ConfirmPayScreen extends StatelessWidget {
   const ConfirmPayScreen({super.key});

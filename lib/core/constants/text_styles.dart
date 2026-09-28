@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/core/constant/app_colors.dart';
+import 'package:new_app/core/constants/app_colors.dart';
 
 /// Neev design-board typography — bundled **Bricolage Grotesque** (same on iOS + Android).
 ///

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/core/constant/app_colors.dart';
-import 'package:new_app/core/constant/text_styles.dart';
-import 'package:new_app/core/constant/app_icon_sizes.dart';
+import 'package:new_app/core/constants/app_colors.dart';
+import 'package:new_app/core/constants/text_styles.dart';
+import 'package:new_app/core/constants/app_icon_sizes.dart';
 import 'package:new_app/core/utils/greeting.dart';
 import 'package:new_app/core/utils/platform_icons.dart';
-import 'package:new_app/data/local/user_prefs.dart';
-import 'package:new_app/data/local/watchlist_storage.dart';
+import 'package:new_app/data/datasources/local/user_prefs.dart';
+import 'package:new_app/data/datasources/local/watchlist_storage.dart';
 import 'package:new_app/presentation/screens/account/edit_profile_screen.dart';
 import 'package:new_app/presentation/screens/account/privacy_policy_screen.dart';
 import 'package:new_app/presentation/screens/account/transactions_screen.dart';
 import 'package:new_app/presentation/screens/explore/watchlist_screen.dart';
 import 'package:new_app/presentation/widgets/app_dialogs.dart';
 import 'package:new_app/presentation/widgets/custom_bottom_nav.dart';
-import 'package:new_app/router/route_manager.dart';
+import 'package:new_app/app/router/app_router.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});

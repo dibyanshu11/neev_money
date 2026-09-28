@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/core/constant/app_svg_assets.dart';
+import 'package:new_app/core/constants/app_svg_assets.dart';
 import 'package:new_app/presentation/widgets/app_svg_icon.dart';
 
 /// Google “G” mark for Continue with Google.

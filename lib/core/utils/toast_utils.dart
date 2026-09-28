@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:new_app/core/constant/text_styles.dart';
-import 'package:new_app/core/constant/toast_type.dart';
-import 'package:new_app/core/constant/app_icon_sizes.dart';
+import 'package:new_app/core/constants/text_styles.dart';
+import 'package:new_app/core/constants/toast_type.dart';
+import 'package:new_app/core/constants/app_icon_sizes.dart';
 import 'package:new_app/core/utils/platform_icons.dart';
 import 'package:new_app/presentation/widgets/app_svg_icon.dart';
-import 'package:new_app/router/route_manager.dart';
+import 'package:new_app/app/router/app_router.dart';
 
-export 'package:new_app/core/constant/toast_type.dart';
+export 'package:new_app/core/constants/toast_type.dart';
 
 /// Overlay toast matching DAHN (`ToastUtils` / `AnimatedToast`).
 class ToastUtils {

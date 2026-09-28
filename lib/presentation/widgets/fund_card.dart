@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:new_app/core/constant/app_colors.dart';
-import 'package:new_app/core/constant/text_styles.dart';
+import 'package:new_app/core/constants/app_colors.dart';
+import 'package:new_app/core/constants/text_styles.dart';
 import 'package:new_app/core/utils/formatters.dart';
-import 'package:new_app/domain/models/fund_model.dart';
+import 'package:new_app/domain/entities/fund_model.dart';
 import 'package:new_app/presentation/widgets/fund_list_tile.dart';
 
 class FundCard extends StatelessWidget {

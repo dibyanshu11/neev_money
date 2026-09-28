@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/core/constant/app_colors.dart';
-import 'package:new_app/core/constant/text_styles.dart';
+import 'package:new_app/core/constants/app_colors.dart';
+import 'package:new_app/core/constants/text_styles.dart';
 import 'package:new_app/core/utils/formatters.dart';
-import 'package:new_app/core/constant/app_icon_sizes.dart';
+import 'package:new_app/core/constants/app_icon_sizes.dart';
 import 'package:new_app/core/utils/platform_icons.dart';
-import 'package:new_app/data/local/goals_data.dart';
-import 'package:new_app/data/local/mock_data.dart';
-import 'package:new_app/data/local/notification_mock.dart';
-import 'package:new_app/domain/models/portfolio_model.dart';
+import 'package:new_app/data/datasources/local/goals_data.dart';
+import 'package:new_app/data/datasources/local/mock_data.dart';
+import 'package:new_app/data/datasources/local/notification_mock.dart';
+import 'package:new_app/domain/entities/portfolio_model.dart';
 import 'package:new_app/presentation/blocs/home/home_bloc.dart';
 import 'package:new_app/presentation/blocs/home/home_event_state.dart';
 import 'package:new_app/presentation/screens/main/main_tab_controller.dart';
 import 'package:new_app/presentation/widgets/custom_bottom_nav.dart';
 import 'package:new_app/presentation/widgets/goal_card.dart';
 import 'package:new_app/core/utils/toast_utils.dart';
-import 'package:new_app/router/route_manager.dart';
+import 'package:new_app/app/router/app_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

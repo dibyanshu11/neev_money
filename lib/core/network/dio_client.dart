@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:new_app/data/local/api_config.dart';
-import 'package:new_app/data/local/token_storage.dart';
+import 'package:new_app/core/network/api_config.dart';
+import 'package:new_app/data/datasources/local/token_storage.dart';
 
 class DioClient {
   DioClient._();

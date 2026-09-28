@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:new_app/domain/models/fund_model.dart';
+import 'package:new_app/domain/entities/fund_model.dart';
 
 part 'explore_event_state.freezed.dart';
 

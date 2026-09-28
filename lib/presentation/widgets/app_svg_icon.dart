@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:new_app/core/constant/app_colors.dart';
+import 'package:new_app/core/constants/app_colors.dart';
 
 /// Renders a bundled SVG with optional tint (stroke icons use currentColor).
 class AppSvgIcon extends StatelessWidget {

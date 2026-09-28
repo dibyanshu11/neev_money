@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:new_app/domain/models/sip_model.dart';
-import 'package:new_app/data/local/goals_data.dart';
+import 'package:new_app/domain/entities/sip_model.dart';
+import 'package:new_app/data/datasources/local/goals_data.dart';
 import 'package:new_app/presentation/blocs/explore/explore_bloc.dart';
 import 'package:new_app/presentation/blocs/explore/explore_event_state.dart';
 import 'package:new_app/presentation/blocs/fund_detail/fund_detail_bloc.dart';
@@ -24,7 +24,7 @@ import 'package:new_app/presentation/screens/sip/confirm_pay_screen.dart';
 import 'package:new_app/presentation/screens/sip/kyc_details_screen.dart';
 import 'package:new_app/presentation/screens/sip/start_sip_screen.dart';
 import 'package:new_app/presentation/screens/sip/success_screen.dart';
-import 'package:new_app/router/route_name.dart';
+import 'package:new_app/app/router/route_names.dart';
 
 final GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>();
 
