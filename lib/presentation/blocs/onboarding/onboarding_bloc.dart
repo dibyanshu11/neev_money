@@ -277,7 +277,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
       isBusy: false,
       name: savedName.isNotEmpty
           ? savedName
-          : (state.name.isEmpty ? 'Investor' : state.name),
+          : (state.name.isEmpty ? '' : state.name),
       phone: savedPhone.isNotEmpty ? savedPhone : state.phone,
     ));
   }
@@ -303,7 +303,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     if (!signupValid) return;
     emit(state.copyWith(isBusy: true));
     await Future<void>.delayed(const Duration(milliseconds: 700));
-    final name = state.name.trim().isEmpty ? 'Investor' : state.name;
+    final name = state.name.trim().isEmpty ? '' : state.name;
     emit(state.copyWith(
       screen: OnboardingScreen.otp,
       isBusy: false,
@@ -324,7 +324,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     emit(state.copyWith(isBusy: true));
     await Future<void>.delayed(const Duration(milliseconds: 700));
     final name =
-        state.name.trim().isEmpty ? 'Investor' : state.name.trim();
+        state.name.trim().isEmpty ? '' : state.name.trim();
     await UserPrefs.instance.saveAuthIdentity(name: name, phone: state.phone);
     if (state.isReturningUser) {
       emit(state.copyWith(

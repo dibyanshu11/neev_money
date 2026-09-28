@@ -134,6 +134,49 @@ class SignupPage extends StatelessWidget {
           const SizedBox(height: 22),
           const _GoogleContinueButton(),
           const SizedBox(height: 22),
+          if (isSignIn)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Don\'t have any account? ',
+                  style: TextStyles.caption.copyWith(
+                    color: AppColors.textSecondary,
+                    fontSize: 12,
+                    height: 1.5,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => bloc.add(const OnboardingEvent.startFlow()),
+                  child: Text(
+                    'Register',
+                    style: _linkStyle,
+                  ),
+                ),
+              ],
+            )
+          else
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Already have an account? ',
+                  style: TextStyles.caption.copyWith(
+                    color: AppColors.textSecondary,
+                    fontSize: 12,
+                    height: 1.5,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => bloc.add(const OnboardingEvent.startSignIn()),
+                  child: Text(
+                    'Login',
+                    style: _linkStyle,
+                  ),
+                ),
+              ],
+            ),
+          const SizedBox(height: 4),
           Text.rich(
             TextSpan(
               text: 'By continuing you agree to our ',

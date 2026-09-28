@@ -9,6 +9,7 @@ import 'package:new_app/presentation/blocs/fund_detail/fund_detail_event_state.d
 import 'package:new_app/presentation/blocs/home/home_bloc.dart';
 import 'package:new_app/presentation/blocs/home/home_event_state.dart';
 import 'package:new_app/presentation/blocs/onboarding/onboarding_bloc.dart';
+import 'package:new_app/presentation/blocs/onboarding/onboarding_event_state.dart';
 import 'package:new_app/presentation/blocs/portfolio/portfolio_bloc.dart';
 import 'package:new_app/presentation/blocs/portfolio/portfolio_event_state.dart';
 import 'package:new_app/presentation/blocs/sip/sip_bloc.dart';
@@ -42,6 +43,14 @@ class RouteManager {
             child: OnboardingShell(
               skipSplashIntro: settings.arguments == true,
             ),
+          ),
+        );
+      case RouteName.login:
+        return slideRoute(
+          BlocProvider(
+            create: (_) =>
+                OnboardingBloc()..add(const OnboardingEvent.startSignIn()),
+            child: const OnboardingShell(skipSplashIntro: true),
           ),
         );
       case RouteName.mainShell:
@@ -150,6 +159,16 @@ class NavigateTo {
       RouteName.splash,
       (_) => false,
       arguments: showGetStarted,
+    );
+  }
+
+  /// Clears the stack and opens login directly (skips splash / Get started).
+  static void login(BuildContext context) {
+    MainTabController.instance.goHome();
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      RouteName.login,
+      (_) => false,
     );
   }
 

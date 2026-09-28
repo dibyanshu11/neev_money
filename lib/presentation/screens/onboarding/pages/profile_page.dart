@@ -5,7 +5,6 @@ import 'package:new_app/core/utils/platform_icons.dart';
 import 'package:new_app/presentation/blocs/onboarding/onboarding_bloc.dart';
 import 'package:new_app/presentation/blocs/onboarding/onboarding_event_state.dart';
 import 'package:new_app/presentation/screens/onboarding/shared/onboarding_widgets.dart';
-import 'package:new_app/data/local/user_prefs.dart';
 import 'package:new_app/presentation/widgets/app_dialogs.dart';
 import 'package:new_app/router/route_manager.dart';
 
@@ -131,9 +130,6 @@ class ProfilePage extends StatelessWidget {
                   onTap: () async {
                     final confirmed = await showLogoutConfirmDialog(context);
                     if (!confirmed || !context.mounted) return;
-                    await UserPrefs.instance.clearProfile();
-                    if (!context.mounted) return;
-                    NavigateTo.splash(context, showGetStarted: true);
                   },
                   showDivider: false,
                 ),

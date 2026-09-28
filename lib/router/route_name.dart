@@ -1,5 +1,6 @@
 class RouteName {
   static const splash = '/';
+  static const login = '/login';
   static const mainShell = '/main';
   static const goals = '/goals';
   static const fundDetail = '/fund-detail';

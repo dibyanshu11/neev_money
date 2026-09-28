@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:new_app/core/constant/app_colors.dart';
 import 'package:new_app/core/constant/text_styles.dart';
 import 'package:new_app/core/utils/platform_icons.dart';
+import 'package:new_app/data/local/user_prefs.dart';
 import 'package:new_app/presentation/widgets/onboarding/neev_outline_button.dart';
+import 'package:new_app/router/route_manager.dart';
 
 /// Neev button that shows an in-button loader while [onPressed] runs.
 class LoadingNeevButton extends StatefulWidget {
@@ -183,16 +185,29 @@ Future<void> showAppAlertDialog(
   );
 }
 
-Future<bool> showLogoutConfirmDialog(BuildContext context) {
-  return showAppConfirmDialog(
+Future<bool> showLogoutConfirmDialog(BuildContext context) async {
+  final confirmed = await showAppConfirmDialog(
     context,
     title: 'Log out?',
-    message:
-        'You’ll need to sign in again to see your portfolio and SIPs.',
+    message: 'You’ll need to sign in again to see your portfolio and SIPs.',
     confirmLabel: 'Log out',
     cancelLabel: 'Cancel',
     isDestructive: true,
   );
+
+  if (confirmed && context.mounted) {
+    await UserPrefs.instance.clearProfile();
+
+    if (!context.mounted) return false;
+
+    // Use the named login route — RouteManager wraps OnboardingShell
+    // with BlocProvider<OnboardingBloc> pre-seeded to the login
+    // (signup in returning-user mode). Pushing OnboardingShell directly
+    // via MaterialPageRoute crashes with ProviderNotFoundException.
+    NavigateTo.login(context);
+  }
+
+  return confirmed;
 }
 
 Future<bool> showDeleteAccountConfirmDialog(BuildContext context) {
@@ -211,8 +226,9 @@ Future<bool> showBiometricConfirmDialog(
   BuildContext context, {
   required bool enabling,
 }) {
-  final label =
-      isCupertinoPlatform ? 'Face ID / Touch ID' : 'Fingerprint / Face unlock';
+  final label = isCupertinoPlatform
+      ? 'Face ID / Touch ID'
+      : 'Fingerprint / Face unlock';
   return showAppConfirmDialog(
     context,
     title: enabling ? 'Turn on $label?' : 'Turn off $label?',

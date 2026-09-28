@@ -314,8 +314,6 @@ class _AccountScreenState extends State<AccountScreen> {
                           final confirmed =
                               await showLogoutConfirmDialog(context);
                           if (confirmed && context.mounted) {
-                            await UserPrefs.instance.clearProfile();
-                            if (context.mounted) NavigateTo.splash(context);
                           }
                         },
                         child: Row(
